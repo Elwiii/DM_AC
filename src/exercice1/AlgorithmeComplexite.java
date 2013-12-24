@@ -8,6 +8,7 @@ package exercice1;
 /**
  *
  * @author CHAYEM Samy
+ * @deprecated
  */
 public class AlgorithmeComplexite {
 
@@ -16,15 +17,16 @@ public class AlgorithmeComplexite {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        ArbreBinaire b = new ArbreBinaire(2, new ArbreBinaire(1), new ArbreBinaire(4, new ArbreBinaire(3), new ArbreBinaire(5)));
+        ArbreBinaire<Integer> b = new ArbreBinaire(2, new ArbreBinaire(1), new ArbreBinaire(4, new ArbreBinaire(3), new ArbreBinaire(5)));
 //        ArbreBinaire b = new ArbreBinaire(2, new ArbreBinaire(1), new ArbreBinaire(4, new ArbreBinaire(1), new ArbreBinaire(5))); Fonctionne mais pas correct, car 2x 1
-        ArbreBinaire c = new ArbreBinaire(10, new ArbreBinaire(8), new ArbreBinaire(12));
-        ArbreBinaire a = new ArbreBinaire(6, b, c);
+        ArbreBinaire<Integer> c = new ArbreBinaire(10, new ArbreBinaire(8), new ArbreBinaire(12));
+        ArbreBinaire<Integer> a = new ArbreBinaire(6, b, c);
         System.out.println("Arbre b est\n\t" + b);
         System.out.println("Arbre c est\n\t" + c);
         System.out.println("Arbre a est\n\t" + a);
         System.out.println("Arbre a contient-il 7 ? " + a.contient(7));
-        System.out.println("Profondeur c est " + a.profondeurArbre(c));
+//        System.out.println("Profondeur c est " + c.profondeurArbre());
+//        System.out.println("Profondeur c est " + c.profondeurArbre(c));
         a.inserer(7);
         System.out.println("Arbre a contient-il 7 ? " + a.contient(7));
         System.out.println("Arbre a, après insertion de 7, est\n\t" + a);

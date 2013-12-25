@@ -13,32 +13,45 @@ package exercice1;
  */
 public class ArbreBinaireCartesien<E extends Comparable<E>> {
 
-    /**
-     * La classe noeud de l'arbre binaire cartesien. Une clef et une priorité . 
-     *
-     */
-    class NoeudArbre<T extends Comparable<T>> {
+    /* constant noeud à l'extrémité */
+    private final NoeudArbre NIL = new NoeudArbre(null, -1);
 
-        T clef;
-        double priorite;
-        NoeudArbre<T> filsGauche;
-        NoeudArbre<T> filsDroit;
-        NoeudArbre<T> pere;
-
-        public NoeudArbre(T clef, double priorite) {
-            this.clef = clef;
-            this.priorite = priorite;
-            filsGauche = null;
-            filsDroit = null;
-            pere = null;
-        }
-
-    }
-
+    /* la racine de l'abc */
     protected NoeudArbre<E> root;
 
+    /**
+     * La classe noeud de l'arbre binaire cartesien. Une clef et une priorité .
+     *
+     * @param <E>
+     */
+    protected class NoeudArbre<E extends Comparable<E>> {
+
+        E clef;
+        double priorite;
+        NoeudArbre<E> filsGauche;
+        NoeudArbre<E> filsDroit;
+        NoeudArbre<E> pere;
+
+        protected NoeudArbre(E clef, double priorite) {
+            this.clef = clef;
+            this.priorite = priorite;
+            filsGauche = NIL;
+            filsDroit = NIL;
+            pere = NIL;
+        }
+
+        @Override
+        public String toString() {
+            String res = "NIL";
+            if (this != NIL) {
+                res = "(" + clef + ";" + priorite + ")" + "-> " + "[" + filsGauche + " , " + filsDroit + "]";
+            }
+            return res;
+        }
+    }
+
     public ArbreBinaireCartesien() {
-        root = null;
+        root = NIL;
     }
 
     /**
@@ -55,46 +68,70 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
     /**
      * Insère un noeud dans un ABC intermediaire
      *
-     * @param root la racine du ABC intermediaire
+     * @param rootPivot la racine du ABC intermediaire
      * @param noeud
      */
-    protected void insererNoeud(NoeudArbre<E> root, NoeudArbre<E> noeud) {
-        if (this.root == null) {
-            this.root = noeud;
+    protected void insererNoeud(NoeudArbre<E> rootPivot, NoeudArbre<E> noeud) {
+        // le noeud doit être inséré au dessus ou en dessous du rootIntermediaire ?
+        if (rootPivot.priorite < noeud.priorite) {
+            insererAuDessusPivot(rootPivot, noeud);
         } else {
-            // le noeud doit être inséré au dessus ou en dessous du root ?
-            if (root.priorite < noeud.priorite) {
-                // le root est il le root du treap principale ?
-                if (root == this.root) {
-                    this.root = noeud;
-                } else {
-                    // root est le fils droit ou gauche de son père ?
-                    if (root == root.pere.filsDroit) {
-                        root.pere.filsDroit = noeud;
-                    } else {
-                        root.pere.filsGauche = noeud;
-                    }
-                    noeud.pere = root.pere;
-                }
+            insererEnDessousPivot(rootPivot, noeud);
+        }
+    }
 
-                root.pere = noeud;
+    private void insererAuDessusPivot(NoeudArbre<E> noeudPivot, NoeudArbre<E> noeud) {
+// le noeud doit être inséré au dessus du rootIntermediaire
+        System.out.println("flag1");
+        // le root est il le root du treap principale ?
+        if (noeudPivot == root) {
+//                System.out.println("flag2");
+            root = noeud;
 
-                // on place le root a droite ou a gauche du noeud ?
-                if (noeud.clef.compareTo(root.clef) < 0) {
-                    noeud.filsDroit = root;
-                } else {
-                    noeud.filsGauche = root;
-                }
-
+        } else {
+            // root est le fils droit ou gauche de son père ?
+            if (noeudPivot == noeudPivot.pere.filsDroit) {
+                noeudPivot.pere.filsDroit = noeud;
             } else {
-                // insère a droite du root ou du gauche
-                if (noeud.clef.compareTo(root.clef) < 0) {
-                    insererNoeud(root.filsGauche, noeud);
-                } else {
-                    insererNoeud(root.filsDroit, noeud);
-                }
+                noeudPivot.pere.filsGauche = noeud;
+            }
+
+            noeud.pere = noeudPivot.pere;
+
+            noeudPivot.pere = noeud;
+
+        }
+
+        // est on dans l'étape initiale( où l'arbre est vide )?
+        if (noeudPivot != NIL) {
+            // on place le root a droite ou a gauche du noeud ?
+            if (noeud.clef.compareTo(noeudPivot.clef) < 0) {
+                noeud.filsDroit = noeudPivot;
+            } else {
+                noeud.filsGauche = noeudPivot;
             }
         }
+    }
+    
+    private void insererEnDessousPivot(NoeudArbre<E> noeudPivot, NoeudArbre<E> noeud) {
+        // insère a droite du root ou du gauche ?
+            if (noeud.clef.compareTo(noeudPivot.clef) < 0) {
+                // le root est il une feuille ?
+                if (noeudPivot.filsGauche != NIL) {
+                    insererNoeud(noeudPivot.filsGauche, noeud);
+                } else {
+                    noeudPivot.filsGauche = noeud;
+                    noeud.pere = noeudPivot;
+                }
+            } else {
+                // le root est il une feuille ?
+                if (noeudPivot.filsDroit != NIL) {
+                    insererNoeud(noeudPivot.filsDroit, noeud);
+                } else {
+                    noeudPivot.filsDroit = noeud;
+                    noeud.pere = noeudPivot;
+                }
+            }
     }
 
     /**
@@ -105,25 +142,34 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
     private int computeHauteurIntermediaire(NoeudArbre<E> root) {
         int hauteurGauche = 0;
         int hauteurDroite = 0;
-        
-        if(root.filsDroit != null)
-            hauteurDroite = 1 + computeHauteurIntermediaire(root.filsDroit);
-        
-        if(root.filsGauche != null)
-            hauteurGauche = 1 + computeHauteurIntermediaire(root.filsGauche);
 
-        return Math.max(hauteurGauche,hauteurDroite);
+        if (root.filsDroit != NIL) {
+            hauteurDroite = 1 + computeHauteurIntermediaire(root.filsDroit);
+        }
+
+        if (root.filsGauche != NIL) {
+            hauteurGauche = 1 + computeHauteurIntermediaire(root.filsGauche);
+        }
+
+        return Math.max(hauteurGauche, hauteurDroite);
     }
-    
+
     /**
      * Calcul la hauteur du ABC principal
+     *
      * @return la hauteur du ABC principal
      */
-    public int computeHauteur(){
+    public int computeHauteur() {
         int hauteur = 0;
-        if(root !=null)
+        if (root != NIL) {
             hauteur = computeHauteurIntermediaire(root);
+        }
         return hauteur;
+    }
+
+    @Override
+    public String toString() {
+        return root.toString();
     }
 
 }

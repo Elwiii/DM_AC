@@ -13,7 +13,6 @@ package exercice1;
  */
 public class Treap<E extends Comparable<E>> extends ArbreBinaireCartesien<E> {
 
-    
     public Treap() {
         super();
     }
@@ -33,8 +32,9 @@ public class Treap<E extends Comparable<E>> extends ArbreBinaireCartesien<E> {
      * tout en la laissant possible pour les ABC
      * @param clef
      * @param priorite 
+     * @deprecated
      */
-    @Override
+     @Override
      public void insererClef(E clef, double priorite) {
         throw new UnsupportedOperationException( "Impossible de choisir la priorité lors de l'insertion d'un noeud dans un TREAP" ); 
      }

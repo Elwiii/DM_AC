@@ -5,19 +5,14 @@
  */
 package exercice2;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -48,7 +43,7 @@ public class Morphing {
     public void parseTexteVersMot() {
         try {
             Pattern pattern = Pattern.compile("[^\\ \\.\\*\\?\\(\\)\\[\\]\\{\\}\\^\\$\\|\\+]");
-            Scanner scanner = new Scanner(new FileReader(this.cheminFichierEntre)).useDelimiter(" |, |; |# |! |^ |$ |( |) |[ |] | .");
+            Scanner scanner = new Scanner(new FileReader(this.cheminFichierEntre));
             String mot = null;
             while (scanner.hasNext()) {
                 mot = scanner.next();
@@ -60,26 +55,25 @@ public class Morphing {
         }
     }
 
-    /**
-     * Pas sur que ce soit vraiment demandé
-     *
-     * @param cheminFichierSorti
-     */
-    public void extractionMot(String cheminFichierSorti) {
-        PrintWriter printWriter = null;
-        try {
-            printWriter = new PrintWriter(new FileWriter(cheminFichierEntre));
-            for (int i = 0; i < this.listeMot.size(); i++) {
-                printWriter.println(this.listeMot.get(i));
-                printWriter.flush();
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(Morphing.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            printWriter.close();
-        }
-
-    }
+//    /**
+//     * Pas sur que ce soit vraiment demandé
+//     * Pas utile
+//     * @param cheminFichierSorti
+//     */
+//    public void extractionMot(String cheminFichierSorti) {
+//        PrintWriter printWriter = null;
+//        try {
+//            printWriter = new PrintWriter(new FileWriter(cheminFichierSorti));
+//            for (int i = 0; i < this.listeMot.size(); i++) {
+//                printWriter.println(this.listeMot.get(i));
+//                printWriter.flush();
+//            }
+//        } catch (IOException ex) {
+//            Logger.getLogger(Morphing.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            printWriter.close();
+//        }
+//    }
 
     /**
      * Le passage en tableau de caractere n'est pas obligatoire mais je prefere
@@ -115,7 +109,7 @@ public class Morphing {
             }
 
         }
-        return "Distance de Levenshtein : " + source + " et " + target + " est de : " + levenshtein[chaineCharSource.length][chaineCharTarget.length];
+        return "<" + source + ", " + target + ">, la distance de Levenshtein = " + levenshtein[chaineCharSource.length][chaineCharTarget.length];
     }
 
     public int minimum(int a, int b, int c) {

@@ -13,7 +13,7 @@ package exercice1;
  */
 public class ArbreBinaireCartesien<E extends Comparable<E>> {
 
-    /* constant noeud à l'extrémité */
+    /* constante noeud à l'extrémité */
     private final NoeudArbre NIL = new NoeudArbre(null, -1);
 
     /* la racine de l'abc */
@@ -44,7 +44,7 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         public String toString() {
             String res = "NIL";
             if (this != NIL) {
-                res = "(" + clef + ";" + priorite + ")" + "-> " + "[" + filsGauche + " , " + filsDroit + "]";
+                res = "(" + clef + ";" + priorite /*+"||| son père : "+pere.clef+"/"+pere.priorite*/+")" + "-> " + "[" + filsGauche + " , " + filsDroit + "]";
             }
             return res;
         }
@@ -56,82 +56,126 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
 
     /**
      * On choisit une priorité p au hasard et on insère noeud(clef,p) dans le
-     * treap
+     * treap.
      *
      * @param clef
      * @param priorite
      */
     public void insererClef(E clef, double priorite) {
-        insererNoeud(root, new NoeudArbre(clef, priorite));
+//        insererNoeudABC(root, new NoeudArbre(clef, priorite));
+        //On insère d'abord dans l'AB dans tenir compte de la priorité
+        NoeudArbre<E> noeud = new NoeudArbre(clef, priorite);
+        insererNoeudAB(noeud);
+        remonterNoeud(noeud);
     }
 
     /**
-     * Insère un noeud dans un ABC intermediaire
+     * insertion dans l'ABC sans tenir compte de la priorité (on l'insère aux
+     * feuilles), itérativement
      *
-     * @param rootPivot la racine du ABC intermediaire
      * @param noeud
      */
-    protected void insererNoeud(NoeudArbre<E> rootPivot, NoeudArbre<E> noeud) {
-        // le noeud doit être inséré au dessus ou en dessous du rootIntermediaire ?
-        if (rootPivot.priorite < noeud.priorite) {
-            insererAuDessusPivot(rootPivot, noeud);
-        } else {
-            insererEnDessousPivot(rootPivot, noeud);
-        }
-    }
-
-    private void insererAuDessusPivot(NoeudArbre<E> noeudPivot, NoeudArbre<E> noeud) {
-// le noeud doit être inséré au dessus du rootIntermediaire
-        System.out.println("flag1");
-        // le root est il le root du treap principale ?
-        if (noeudPivot == root) {
-//                System.out.println("flag2");
+    protected void insererNoeudAB(NoeudArbre<E> noeud) {
+        boolean stop = false;
+        NoeudArbre<E> pivot = root;
+        NoeudArbre<E> pivotPere = NIL;
+        // l'arbre est il vide ?
+        if (root == NIL) {
             root = noeud;
-
         } else {
-            // root est le fils droit ou gauche de son père ?
-            if (noeudPivot == noeudPivot.pere.filsDroit) {
-                noeudPivot.pere.filsDroit = noeud;
-            } else {
-                noeudPivot.pere.filsGauche = noeud;
-            }
-
-            noeud.pere = noeudPivot.pere;
-
-            noeudPivot.pere = noeud;
-
-        }
-
-        // est on dans l'étape initiale( où l'arbre est vide )?
-        if (noeudPivot != NIL) {
-            // on place le root a droite ou a gauche du noeud ?
-            if (noeud.clef.compareTo(noeudPivot.clef) < 0) {
-                noeud.filsDroit = noeudPivot;
-            } else {
-                noeud.filsGauche = noeudPivot;
+            // tant qu'on a pas atteint une feuille, on cherche la feuille où on doit placer le pivot.
+            while (!stop) {
+                pivotPere = pivot;
+                //Doit on insérer à droite ou à gauche du pivot ?
+                if (noeud.clef.compareTo(pivot.clef) < 0) {
+                    // on insère à gauche
+                    pivot = pivot.filsGauche;
+                    // on a atteint une feuille
+                    if (pivot == NIL) {
+                        pivotPere.filsGauche = noeud;
+                        noeud.pere = pivotPere;
+                        stop = true;
+                    }
+                } else {
+                    // on insère à droite
+                    pivot = pivot.filsDroit;
+                    // on a atteint une feuille
+                    if (pivot == NIL) {
+                        pivotPere.filsDroit = noeud;
+                        noeud.pere = pivotPere;
+                        stop = true;
+                    }
+                }
             }
         }
     }
-    
-    private void insererEnDessousPivot(NoeudArbre<E> noeudPivot, NoeudArbre<E> noeud) {
-        // insère a droite du root ou du gauche ?
-            if (noeud.clef.compareTo(noeudPivot.clef) < 0) {
-                // le root est il une feuille ?
-                if (noeudPivot.filsGauche != NIL) {
-                    insererNoeud(noeudPivot.filsGauche, noeud);
-                } else {
-                    noeudPivot.filsGauche = noeud;
-                    noeud.pere = noeudPivot;
-                }
+
+    /**
+     * remonte le noeud dans l'abre tant que sa priorité est supérieur celle de
+     * son père.
+     *
+     * @param noeud le noeud à remonter
+     */
+    protected void remonterNoeud(NoeudArbre<E> noeud) {
+        while (noeud.pere.priorite < noeud.priorite && noeud.pere != NIL) {
+            remonterNoeudUnCran(noeud);
+        }
+    }
+
+    /**
+     * remonte le noeud d'un cran dans l'arbre en respectant la règle des arbre
+     * binaire. Suppose que le noeud.pere != NIL
+     *
+     * @param noeud
+     */
+    private void remonterNoeudUnCran(NoeudArbre<E> noeud) {
+        assert (noeud.pere != NIL) : "Noeud.pere = NIL";
+        // père du noeud
+        NoeudArbre<E> p = noeud.pere;
+        // fils droit du noeud
+        NoeudArbre<E> d = noeud.filsDroit;
+        // fils gauche du noeud
+        NoeudArbre<E> g = noeud.filsGauche;
+        // grand père du noeud
+        NoeudArbre<E> gp = noeud.pere.pere;
+        
+        if (noeud == p.filsDroit) {
+            // la clef du noeud est plus grande que celle de son père.
+            noeud.filsGauche = p;
+            p.filsDroit = g;
+            g.pere = p;
+
+        } else {
+            if (noeud == p.filsGauche) {
+                // la clef du noeud est plus petite que celle de son père.
+                noeud.filsDroit = p;
+                p.filsGauche = d;
+                d.pere = p;
             } else {
-                // le root est il une feuille ?
-                if (noeudPivot.filsDroit != NIL) {
-                    insererNoeud(noeudPivot.filsDroit, noeud);
+                // Cas impossible
+                System.err.println("Etat incohérent : le noeud doit être forcement le fils gauche ou droit de son père");
+            }
+        }
+        
+        if (gp != NIL) {
+            if (p == gp.filsDroit) {
+                gp.filsDroit = noeud;
+            } else {
+                if (p == gp.filsGauche) {
+                    gp.filsGauche = noeud;
                 } else {
-                    noeudPivot.filsDroit = noeud;
-                    noeud.pere = noeudPivot;
+                    // Cas impossible
+                    System.err.println("Etat incohérent : le père du noeud doit être forcement le fils gauche ou droit du grand père du noeud");
                 }
             }
+        } else {
+            // le grand père est NIL => le pere était root, donc notre noeud devient root
+            root = noeud;
+        }
+        // le grand père du noeud devient son père
+        noeud.pere = gp;
+        // le noeud devient le père de son père.
+        p.pere = noeud;
     }
 
     /**
@@ -172,4 +216,91 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         return root.toString();
     }
 
+//    /**
+//     * Insère un noeud dans un ABC
+//     *
+//     * @param rootABC la racine du ABC
+//     * @param noeud
+//     */
+//    protected void insererNoeudABC(NoeudArbre<E> rootABC, NoeudArbre<E> noeud) {
+//        //On insère d'abord dans l'AB dans tenir compte de la priorité
+////        insererNoeudAB();
+//        //On fait remonter        
+//    }
+//    /**
+//     * Insère un noeud dans un ABC intermediaire
+//     *
+//     * @param noeudPivot la racine du ABC intermediaire
+//     * @param noeud
+//     */
+//    protected void insererNoeud(NoeudArbre<E> noeudPivot, NoeudArbre<E> noeud) {
+//        // le noeud doit être inséré au dessus ou en dessous du rootPivot ?
+//        if (noeudPivot.priorite < noeud.priorite) {
+//            insererAuDessusPivot(noeudPivot, noeud);
+//        } else {
+//            insererEnDessousPivot(noeudPivot, noeud);
+//        }
+//    }
+//    /**
+//     * @deprecated 
+//     * @param noeudPivot
+//     * @param noeud 
+//     */
+//    private void insererAuDessusPivot(NoeudArbre<E> noeudPivot, NoeudArbre<E> noeud) {
+//        // le pivot est il le root du treap ?
+//        if (noeudPivot == root) {
+//            root = noeud;
+//        } else {
+//            // le pivot est le fils droit ou gauche de son père ?
+//            if (noeudPivot == noeudPivot.pere.filsDroit) {
+//                noeudPivot.pere.filsDroit = noeud;
+//            } else {
+//                noeudPivot.pere.filsGauche = noeud;
+//            }
+//
+//            noeud.pere = noeudPivot.pere;
+//            
+//        }
+//        
+//        
+//        
+//        // placement du pivot sous le noeud
+//        // est on dans l'étape initiale( où l'arbre est vide )?
+//        if (noeudPivot != NIL) {
+//            // on place le pivot a droite ou a gauche du noeud ?
+//            if (noeud.clef.compareTo(noeudPivot.clef) < 0) {
+//                noeud.filsDroit = noeudPivot;
+//            } else {
+//                noeud.filsGauche = noeudPivot;
+//            }
+//            
+//            noeudPivot.pere = noeud;
+//        }
+//    }
+//    
+//    /**
+//     * @deprecated
+//     * @param noeudPivot
+//     * @param noeud 
+//     */
+//    private void insererEnDessousPivot(NoeudArbre<E> noeudPivot, NoeudArbre<E> noeud) {
+//        // insère a droite du root ou du gauche ?
+//            if (noeud.clef.compareTo(noeudPivot.clef) < 0) {
+//                // le root est il une feuille ?
+//                if (noeudPivot.filsGauche != NIL) {
+//                    insererNoeudABC(noeudPivot.filsGauche, noeud);
+//                } else {
+//                    noeudPivot.filsGauche = noeud;
+//                    noeud.pere = noeudPivot;
+//                }
+//            } else {
+//                // le root est il une feuille ?
+//                if (noeudPivot.filsDroit != NIL) {
+//                    insererNoeudABC(noeudPivot.filsDroit, noeud);
+//                } else {
+//                    noeudPivot.filsDroit = noeud;
+//                    noeud.pere = noeudPivot;
+//                }
+//            }
+//    }
 }

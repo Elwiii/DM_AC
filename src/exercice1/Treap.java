@@ -23,7 +23,9 @@ public class Treap<E extends Comparable<E>> extends ArbreBinaireCartesien<E> {
      */
     public void insererClefTreap(E clef) {
         double priorite = Math.random();
-        insererNoeud(root, new NoeudArbre(clef, priorite));
+        NoeudArbre<E> noeud = new NoeudArbre(clef, priorite);
+        insererNoeudAB(noeud);
+        remonterNoeud(noeud);
     }
     
     /**

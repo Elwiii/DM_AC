@@ -34,7 +34,7 @@ public class UnionFind<E> {
 
         E data;
         NoeudUF<E> pere;
-        private double priorite;
+        double priorite;
 
         private NoeudUF(E data, NoeudUF<E> pere, double priorite) {
             this.data = data;
@@ -53,7 +53,7 @@ public class UnionFind<E> {
                 String pereData = pere.data+"";
                 if(pere.data == null)
                     pereData = "root";
-                result = "("+""+data +":"+ pereData+")";
+                result = "("+""+data +":<"+ pereData+">)";
             }
             
             return result;
@@ -103,6 +103,7 @@ public class UnionFind<E> {
      * @return
      */
     private NoeudUF<E> getNodeOfData(E data) {
+        assert(E!=null):"l'élement spécifié ne peut être null";
         NoeudUF<E> result = MISSING;
         NoeudUF<E> temp;
         int i = 0;
@@ -114,6 +115,31 @@ public class UnionFind<E> {
             i++;
         }
         return result;
+    }
+    
+    /**
+     * fusionne deux ensembles, le root des deux arbres fusionés est celui ayant la plus grande priorité des
+     * deux anciens root
+     * @param x
+     * @param y
+     * @return le nouveau root, null si x ou y n'existe pas.
+     */
+    public E union(E x, E y){
+        E root = null;
+        E rootX = find(x);
+        E rootY = find(y);
+        if(rootX != null && rootY!=null){
+            NoeudUF<E> nodeRootX = getNodeOfData(rootX);
+            NoeudUF<E> nodeRootY = getNodeOfData(rootY);
+            if(nodeRootX.priorite>nodeRootY.priorite){
+                nodeRootY.pere = nodeRootX;
+                root = nodeRootX.data;
+            }else{
+                nodeRootX.pere = nodeRootY;
+                root = nodeRootX.data;
+            }
+        }
+        return root;
     }
     
     @Override

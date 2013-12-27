@@ -61,7 +61,7 @@ public class UnionFind<E> {
                 if (pere.data == null) {
                     pereData = "root";
                 }
-                result = "(" + "" + data + /*","+priorite+*/ ":<" + pereData + ">)";
+                result = "(" + "" + data + ","+priorite+ " : <" + pereData + ">)";
             }
 
             return result;

@@ -72,8 +72,8 @@ public class VerificationUnionFind {
             System.out.println("uf : "+uf);
             System.out.println("uf.union(3, 4) : "+uf.union(3, 4,UnionFind.COMPRESSION));
             System.out.println("uf : "+uf);
-//            System.out.println("uf.union(7, 3) : "+uf.union(7, 3,UnionFind.COMPRESSION));
-//            System.out.println("uf : "+uf);
+            System.out.println("uf.union(7, 3) : "+uf.union(7, 3,UnionFind.COMPRESSION));
+            System.out.println("uf : "+uf);
 //            uf.union(2, 6,UnionFind.COMPRESSION);
 //            uf.union(2, 5,UnionFind.COMPRESSION);
 //            uf.union(8, 5,UnionFind.COMPRESSION);

@@ -25,7 +25,7 @@ public class UnionFind<E> {
     private final ArrayList<NoeudUF<E>> nodes;
 
     private final NoeudUF<E> MISSING = new NoeudUF(null, null, -1);
-    private final NoeudUF<E> ROOT = new NoeudUF(null, null, -2);
+    //private final NoeudUF<E> ROOT = new NoeudUF(null, null, -2);
 
     /**
      * type de recherche
@@ -54,9 +54,9 @@ public class UnionFind<E> {
             String result;
             if (this == MISSING) {
                 result = "MISSING";
-            } else if (this == ROOT) {
+            } /*else if (this == ROOT) {
                 result = "ROOT";
-            } else {
+            } */else {
                 String pereData = pere.data + "";
                 if (pere.data == null) {
                     pereData = "root";
@@ -87,7 +87,9 @@ public class UnionFind<E> {
             throw new Exercice1Exception("La donnée ne peut être null");
         }
         if (getNodeOfData(data) == MISSING) {
-            nodes.add(new NoeudUF(data, ROOT, Math.random()));
+            NoeudUF n = new NoeudUF(data, null, Math.random());
+            n.pere = n;
+            nodes.add(n);
         }
     }
 
@@ -106,7 +108,7 @@ public class UnionFind<E> {
         }
         NoeudUF<E> result = getNodeOfData(data);
         if (result != MISSING) {
-            while (result.pere != ROOT) {
+            while (result.pere != result) {
                 result = result.pere;
             }
         }
@@ -154,7 +156,7 @@ public class UnionFind<E> {
     private NoeudUF<E> findCompression(NoeudUF<E> nodeX) throws Exercice1Exception {
         NoeudUF<E> result = nodeX.pere;
 
-        if (nodeX.pere != ROOT) {
+        if (nodeX.pere != nodeX) {
             nodeX.pere = findCompression(nodeX.pere);
         } else {
             result = nodeX;

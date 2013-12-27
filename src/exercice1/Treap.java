@@ -7,7 +7,7 @@ package exercice1;
 
 /**
  *
- * mplémentation de la structure de donnée probabiliste TREAP.
+ * Implémentation de la structure de donnée probabiliste TREAP.
  * @author CARRARA Nicolas
  * @param <E>
  */

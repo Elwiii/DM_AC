@@ -6,7 +6,7 @@
 package exercice1;
 
 /**
- * Implémentation de la structure de donnée probabiliste ARBRE CARTESIEN.
+ * Implémentation de la structure de donnée ARBRE CARTESIEN.
  *
  * @author CARRARA Nicolas
  * @param <E>

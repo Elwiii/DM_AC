@@ -54,7 +54,7 @@ public class UnionFind<E> {
                 if (pere.data == null) {
                     pereData = "root";
                 }
-                result = "(" + "" + data + /*","+priorite+*/":<" + pereData + ">)";
+                result = "(" + "" + data + /*","+priorite+*/ ":<" + pereData + ">)";
             }
 
             return result;
@@ -67,8 +67,7 @@ public class UnionFind<E> {
     public UnionFind() {
         nodes = new ArrayList<>();
     }
-    
-    
+
     /**
      * Insère l'element, si il n'existe pas, dans Union find avec une priorité
      * aléatoire.
@@ -81,28 +80,6 @@ public class UnionFind<E> {
         }
     }
 
-    /**
-     * Retourne le noeud qui contient l'element data si il existe, MISSING
-     * sinon.
-     *
-     * @param data
-     * @return
-     */
-    private NoeudUF<E> getNodeOfData(E data) {
-        assert (data != null) : "l'élement spécifié ne peut être null";
-        NoeudUF<E> result = MISSING;
-        NoeudUF<E> temp;
-        int i = 0;
-        while (result == MISSING && i < nodes.size()) {
-            temp = nodes.get(i);
-            if (temp.data.equals(data)) {
-                result = temp;
-            }
-            i++;
-        }
-        return result;
-    }
-    
     /**
      * Cherche le noeud de donnée data puis remonte de père en père jusqu'a
      * retrouver le noeud racine de l'arbre. Itérativement.
@@ -148,14 +125,31 @@ public class UnionFind<E> {
         return root;
     }
 
-   
-
-    
+    /**
+     * Retourne le noeud qui contient l'element data si il existe, MISSING
+     * sinon.
+     *
+     * @param data
+     * @return
+     */
+    private NoeudUF<E> getNodeOfData(E data) {
+        assert (data != null) : "l'élement spécifié ne peut être null";
+        NoeudUF<E> result = MISSING;
+        NoeudUF<E> temp;
+        int i = 0;
+        while (result == MISSING && i < nodes.size()) {
+            temp = nodes.get(i);
+            if (temp.data.equals(data)) {
+                result = temp;
+            }
+            i++;
+        }
+        return result;
+    }
 
     @Override
     public String toString() {
         return this.nodes + "";
     }
-
 
 }

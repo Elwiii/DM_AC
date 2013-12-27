@@ -21,7 +21,9 @@ public class Treap<E extends Comparable<E>> extends ArbreBinaireCartesien<E> {
      * Inserer une clef dans le TREAP
      * @param clef 
      */
-    public void insererClefTreap(E clef) {
+    public void insererClefTreap(E clef) throws Exercice1Exception {
+        if(clef == null)
+            throw new Exercice1Exception("La clef ne peut être null");
         double priorite = Math.random();
         NoeudArbre<E> noeud = new NoeudArbre(clef, priorite);
         insererNoeudAB(noeud);

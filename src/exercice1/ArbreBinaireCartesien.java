@@ -61,7 +61,10 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
      * @param clef
      * @param priorite
      */
-    public void insererClef(E clef, double priorite) {
+    public void insererClef(E clef, double priorite) throws Exercice1Exception {
+        if(clef ==null){
+            throw new Exercice1Exception("La clef ne peut être null");
+        }
 //        insererNoeudABC(root, new NoeudArbre(clef, priorite));
         //On insère d'abord dans l'AB dans tenir compte de la priorité
         NoeudArbre<E> noeud = new NoeudArbre(clef, priorite);

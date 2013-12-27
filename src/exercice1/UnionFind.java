@@ -73,8 +73,12 @@ public class UnionFind<E> {
      * aléatoire.
      *
      * @param data
+     * @throws exercice1.Exercice1Exception
      */
-    public void makeset(E data) {
+    public void makeset(E data) throws Exercice1Exception {
+        if(data ==null){
+            throw new Exercice1Exception("La donnée ne peut être null");
+        }
         if (getNodeOfData(data) == MISSING) {
             nodes.add(new NoeudUF(data, ROOT, Math.random()));
         }
@@ -87,8 +91,12 @@ public class UnionFind<E> {
      * @param data
      * @return la valeur de la racine de l'arbre qui contient l'element data,
      * null si cet element n'existe pas
+     * @throws exercice1.Exercice1Exception
      */
-    public E find(E data) {
+    public E find(E data) throws Exercice1Exception {
+        if(data ==null){
+            throw new Exercice1Exception("La donnée ne peut être null");
+        }
         NoeudUF<E> result = getNodeOfData(data);
         if (result != MISSING) {
             while (result.pere != ROOT) {
@@ -106,8 +114,12 @@ public class UnionFind<E> {
      * @param x
      * @param y
      * @return le nouveau root, null si x ou y n'existe pas.
+     * @throws exercice1.Exercice1Exception
      */
-    public E union(E x, E y) {
+    public E union(E x, E y) throws Exercice1Exception {
+        if(x ==null || y == null){
+            throw new Exercice1Exception("x et y ne peut=vent être null");
+        }
         E root = null;
         E rootX = find(x);
         E rootY = find(y);

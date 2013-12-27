@@ -6,6 +6,9 @@
 
 package exercice1;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 
 
@@ -16,37 +19,44 @@ package exercice1;
 public class VerificationUnionFind {
     
     public static void main(String[] args){
-        UnionFind<Integer> uf = new UnionFind<>();
-        System.out.println("uf : "+uf);
-        uf.makeset(1);
-        System.out.println("uf : "+uf);
-        uf.makeset(3);
-        uf.makeset(4);
-        uf.makeset(7);
-        uf.makeset(2);
-        uf.makeset(5);
-        uf.makeset(6);
-        uf.makeset(8);
-        
-        System.out.println("uf : "+uf);
-        uf.makeset(8);
-        System.out.println("uf : "+uf);
-        System.out.println("uf.find(8) : "+uf.find(8));
-        System.out.println("uf.find(10) : "+uf.find(10));
-        
-        System.out.println("uf.union(1, 3) : "+uf.union(1, 3));
-        System.out.println("uf : "+uf);
-        System.out.println("uf.union(3, 4) : "+uf.union(3, 4));
-        System.out.println("uf : "+uf);
-        System.out.println("uf.union(7, 3) : "+uf.union(7, 3));
-        System.out.println("uf : "+uf);
-        uf.union(2, 6);
-        uf.union(2, 5);
-        uf.union(8, 5);
-        System.out.println("uf : "+uf);
-        
-        uf.union(5, 7);
-        System.out.println("uf : "+uf);
+        try {
+            UnionFind<Integer> uf = new UnionFind<>();
+            System.out.println("uf : "+uf);
+            uf.makeset(1);
+            System.out.println("uf : "+uf);
+            uf.makeset(3);
+            uf.makeset(4);
+            uf.makeset(7);
+            uf.makeset(2);
+            uf.makeset(5);
+            uf.makeset(6);
+            uf.makeset(8);
+            
+            System.out.println("uf : "+uf);
+            uf.makeset(8);
+            System.out.println("uf : "+uf);
+            System.out.println("uf.find(8) : "+uf.find(8));
+            System.out.println("uf.find(10) : "+uf.find(10));
+            
+            System.out.println("uf.union(1, 3) : "+uf.union(1, 3));
+            System.out.println("uf : "+uf);
+            System.out.println("uf.union(3, 4) : "+uf.union(3, 4));
+            System.out.println("uf : "+uf);
+            System.out.println("uf.union(7, 3) : "+uf.union(7, 3));
+            System.out.println("uf : "+uf);
+            uf.union(2, 6);
+            uf.union(2, 5);
+            uf.union(8, 5);
+            System.out.println("uf : "+uf);
+            
+            uf.union(5, 7);
+            System.out.println("uf : "+uf);
+            
+            System.out.println("uf.union(5, null) : "+uf.union(5, null));
+            System.out.println("Flag end test");
+        } catch (Exercice1Exception ex) {
+            Logger.getLogger(VerificationUnionFind.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
     

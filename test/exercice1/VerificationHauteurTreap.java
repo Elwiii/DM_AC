@@ -6,6 +6,8 @@
 package exercice1;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,7 +24,11 @@ public class VerificationHauteurTreap {
             for (int nombreElement = 1; nombreElement < 100; nombreElement++) {
                 t = new Treap<>();
                 for (int i = 0; i < nombreElement; i++) {
-                    t.insererClefTreap(rand.nextInt(1000));
+                    try {
+                        t.insererClefTreap(rand.nextInt(1000));
+                    } catch (Exercice1Exception ex) {
+                        Logger.getLogger(VerificationHauteurTreap.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
                 double log = Math.log(nombreElement);

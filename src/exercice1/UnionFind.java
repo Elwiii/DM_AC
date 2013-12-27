@@ -17,11 +17,11 @@ import java.util.ArrayList;
 public class UnionFind<E> {
 
     /**
-     * ensemble des noeuds de Union find. Chaque noeud représente un élément unique dans la structure.
+     * ensemble des noeuds de Union find. Chaque noeud représente un élément
+     * unique dans la structure.
      */
     private final ArrayList<NoeudUF<E>> nodes;
 
-    
     private final NoeudUF<E> MISSING = new NoeudUF(null, null, -1);
     private final NoeudUF<E> ROOT = new NoeudUF(null, null, -2);
 
@@ -30,7 +30,7 @@ public class UnionFind<E> {
      *
      * @param <E>
      */
-    public class NoeudUF<E> {
+    private class NoeudUF<E> {
 
         E data;
         NoeudUF<E> pere;
@@ -44,18 +44,19 @@ public class UnionFind<E> {
 
         @Override
         public String toString() {
-            String result ;
-            if(this == MISSING){
+            String result;
+            if (this == MISSING) {
                 result = "MISSING";
-            } else if(this == ROOT){
+            } else if (this == ROOT) {
                 result = "ROOT";
-            }else {
-                String pereData = pere.data+"";
-                if(pere.data == null)
+            } else {
+                String pereData = pere.data + "";
+                if (pere.data == null) {
                     pereData = "root";
-                result = "("+""+data +":<"+ pereData+">)";
+                }
+                result = "(" + "" + data + /*","+priorite+*/":<" + pereData + ">)";
             }
-            
+
             return result;
         }
     }
@@ -66,33 +67,18 @@ public class UnionFind<E> {
     public UnionFind() {
         nodes = new ArrayList<>();
     }
-
+    
+    
     /**
-     * Insère l'element, si il n'existe pas, dans Union find avec une priorité aléatoire.
-     * @param data 
+     * Insère l'element, si il n'existe pas, dans Union find avec une priorité
+     * aléatoire.
+     *
+     * @param data
      */
     public void makeset(E data) {
         if (getNodeOfData(data) == MISSING) {
             nodes.add(new NoeudUF(data, ROOT, Math.random()));
         }
-    }
-
-    /**
-     * Cherche le noeud de donnée data puis remonte de père en père jusqu'a
-     * retrouver le noeud racine de l'arbre. Itérativement.
-     *
-     * @param data
-     * @return la valeur de la racine de l'arbre qui contient l'element data, null si cet element n'existe pas
-     */
-    public E find(E data) {
-        NoeudUF<E> result = getNodeOfData(data);
-        if (result != MISSING) {
-            while (result.pere != ROOT) {
-                result = result.pere;
-            }
-        }
-
-        return result.data;
     }
 
     /**
@@ -103,7 +89,7 @@ public class UnionFind<E> {
      * @return
      */
     private NoeudUF<E> getNodeOfData(E data) {
-        assert(E!=null):"l'élement spécifié ne peut être null";
+        assert (data != null) : "l'élement spécifié ne peut être null";
         NoeudUF<E> result = MISSING;
         NoeudUF<E> temp;
         int i = 0;
@@ -118,33 +104,58 @@ public class UnionFind<E> {
     }
     
     /**
-     * fusionne deux ensembles, le root des deux arbres fusionés est celui ayant la plus grande priorité des
-     * deux anciens root
+     * Cherche le noeud de donnée data puis remonte de père en père jusqu'a
+     * retrouver le noeud racine de l'arbre. Itérativement.
+     *
+     * @param data
+     * @return la valeur de la racine de l'arbre qui contient l'element data,
+     * null si cet element n'existe pas
+     */
+    public E find(E data) {
+        NoeudUF<E> result = getNodeOfData(data);
+        if (result != MISSING) {
+            while (result.pere != ROOT) {
+                result = result.pere;
+            }
+        }
+
+        return result.data;
+    }
+
+    /**
+     * fusionne deux ensembles, le root des deux arbres fusionés est celui ayant
+     * la plus grande priorité des deux anciens root
+     *
      * @param x
      * @param y
      * @return le nouveau root, null si x ou y n'existe pas.
      */
-    public E union(E x, E y){
+    public E union(E x, E y) {
         E root = null;
         E rootX = find(x);
         E rootY = find(y);
-        if(rootX != null && rootY!=null){
+        if (rootX != null && rootY != null) {
             NoeudUF<E> nodeRootX = getNodeOfData(rootX);
             NoeudUF<E> nodeRootY = getNodeOfData(rootY);
-            if(nodeRootX.priorite>nodeRootY.priorite){
+            if (nodeRootX.priorite > nodeRootY.priorite) {
                 nodeRootY.pere = nodeRootX;
                 root = nodeRootX.data;
-            }else{
+            } else {
                 nodeRootX.pere = nodeRootY;
-                root = nodeRootX.data;
+                root = nodeRootY.data;
             }
         }
         return root;
     }
+
+   
+
     
+
     @Override
-    public String toString(){
-        return this.nodes+"";
+    public String toString() {
+        return this.nodes + "";
     }
+
 
 }

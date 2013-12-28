@@ -5,7 +5,6 @@
  */
 package exercice1;
 
-import exercice1.ArbreBinaireCartesien.NoeudArbre;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author CHAYEM Samy
  */
-public class Test {
+public class VerificationGenerale {
 
     /**
      * @param args the command line arguments
@@ -71,7 +70,7 @@ public class Test {
             System.out.println(unionFind.find(12, 1));
 
         } catch (Exercice1Exception ex) {
-            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerificationGenerale.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

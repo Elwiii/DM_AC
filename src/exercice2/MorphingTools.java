@@ -48,7 +48,7 @@ public class MorphingTools {
             Scanner scanner = new Scanner(new FileReader(pathInput));
             String mot ;
             while (scanner.hasNext()) {
-                mot = scanner.next().replaceAll("[!,.?\":\\[\\]\\{\\}]", " ");
+                mot = scanner.next().replaceAll("[!,.;?\":\\[\\]\\{\\}]", " ");
                 String[] mots = mot.split(" ");
                 for (String mot1 : mots) {
                     if (!mot1.equals("")) {

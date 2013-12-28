@@ -22,26 +22,21 @@ public class Treap<E extends Comparable<E>> extends ArbreBinaireCartesien<E> {
      * Inserer une clef dans le TREAP
      *
      * @param clef
+     * @throws exercice1.Exercice1Exception
      */
     public void insererClefTreap(E clef) throws Exercice1Exception {
         if (clef == null) {
             throw new Exercice1Exception("La clef ne peut être null");
         }
         double priorite = Math.random();
-        int count = 0;
-        for (NoeudArbre n : listNoeudArbres) {
-            if (n.clef == clef || n.priorite == priorite) {
-                count++;
-            }
+        while(recherchePriorite(priorite,SEARCH_TREE)!=NIL){
+            priorite = Math.random();
         }
-        if (count != 0) {
-            throw new Exercice1Exception("La clé : " + clef + ", et/ou la priorité : " + priorite + " existent deja dans l'arbre. Elles doivent etre uniques");
-        } else {
-            NoeudArbre<E> noeud = new NoeudArbre(clef, priorite);
-            this.listNoeudArbres.add(noeud); // La liste de Noeud va nous permettre de recuperer (grace a l'unicite des clefs et des priorités) les noeuds que l'on recherche, cf: methode rechercheClef
-            insererNoeudAB(noeud);
-            remonterNoeud(noeud);
-        }
+        
+        NoeudArbre<E> noeud = new NoeudArbre(clef, priorite);
+        this.listNoeudArbres.add(noeud); // La liste de Noeud va nous permettre de recuperer (grace a l'unicite des clefs et des priorités) les noeuds que l'on recherche, cf: methode rechercheClef
+        insererNoeudAB(noeud);
+        remonterNoeud(noeud);
     }
 
     /**

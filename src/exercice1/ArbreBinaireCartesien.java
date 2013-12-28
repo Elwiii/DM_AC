@@ -75,11 +75,11 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
             throw new Exercice1Exception("La clef ne peut être null");
         }
         
-        if(rechercheClef(clef,SEARCH_TREE)!=NIL){
+        if(rechercheClef(clef,SEARCH_TREE)!=NIL){ // SEARCH_LIST marche nickel
             throw new Exercice1Exception("La clef existe déjà");
         }
         
-        if(recherchePriorite(priorite,SEARCH_TREE)!=NIL){
+        if(recherchePriorite(priorite,SEARCH_TREE)!=NIL){ // SEARCH_LIST marche nickel
             throw new Exercice1Exception("La priorite existe déjà");
         }
 
@@ -87,6 +87,7 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         listNoeudArbres.add(noeud);
         //On insère d'abord dans l'AB dans tenir compte de la priorité
         insererNoeudAB(noeud);
+        //On remonte ensuite le noeud en fonction de la priorité
         remonterNoeud(noeud);
     }
     

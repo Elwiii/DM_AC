@@ -22,20 +22,20 @@ public class VerificationGenerale {
             // ABC
             ArbreBinaireCartesien<Integer> abc = new ArbreBinaireCartesien<>();
             abc.insererClef(1, 2);
-            System.out.println(abc.computeHauteur() + " / " + abc);
-            abc.insererClef(2, 3);
-            System.out.println(abc.computeHauteur() + " / " + abc);
-            abc.insererClef(1, 4);
-            System.out.println(abc.computeHauteur() + " / " + abc);
-            abc.insererClef(20, 30);
-            System.out.println(abc.computeHauteur() + " / " + abc);
-            abc.insererClef(12, 10);
-            System.out.println(abc.computeHauteur() + " / " + abc);
-            System.out.println("Noeud : " + abc.rechercheClef(2));
-            System.out.println("Noeud");
-            for (int i = 0; i < abc.listNoeudArbres.size(); i++) {
-                System.out.println(abc.listNoeudArbres.get(i));
-            }
+//            System.out.println(abc.computeHauteur() + " / " + abc);
+//            abc.insererClef(2, 3);
+//            System.out.println(abc.computeHauteur() + " / " + abc);
+//            abc.insererClef(4, 4);
+//            System.out.println(abc.computeHauteur() + " / " + abc);
+//            abc.insererClef(20, 30);
+//            System.out.println(abc.computeHauteur() + " / " + abc);
+//            abc.insererClef(12, 10);
+//            System.out.println(abc.computeHauteur() + " / " + abc);
+//            System.out.println("Noeud : " + abc.rechercheClef(1, abc.SEARCH_LIST));
+//            System.out.println("Noeud");
+//            for (int i = 0; i < abc.listNoeudArbres.size(); i++) {
+//                System.out.println(abc.listNoeudArbres.get(i));
+//            }
 
             // Treap
 //            Treap<Integer> treap = new Treap<>();

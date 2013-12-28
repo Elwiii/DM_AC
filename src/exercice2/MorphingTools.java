@@ -114,7 +114,7 @@ public class MorphingTools {
      * @param c
      * @return minimum des 3 valeurs
      */
-    public static int minimum(int a, int b, int c) {
+    private static int minimum(int a, int b, int c) {
         return Math.min(Math.min(a, b), c);
     }
     

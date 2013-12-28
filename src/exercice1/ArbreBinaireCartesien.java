@@ -44,7 +44,7 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         public String toString() {
             String res = "NIL";
             if (this != NIL) {
-                res = "(" + clef + ";" + priorite /*+"||| son père : "+pere.clef+"/"+pere.priorite*/+")" + "-> " + "[" + filsGauche + " , " + filsDroit + "]";
+                res = "(" + clef + "; " + priorite /*+"||| son père : "+pere.clef+"/"+pere.priorite*/ + ")" + " -> " + "[" + filsGauche + ", " + filsDroit + "]";
             }
             return res;
         }
@@ -63,7 +63,7 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
      * @throws exercice1.Exercice1Exception
      */
     public void insererClef(E clef, double priorite) throws Exercice1Exception {
-        if(clef ==null){
+        if (clef == null) {
             throw new Exercice1Exception("La clef ne peut être null");
         }
 //        insererNoeudABC(root, new NoeudArbre(clef, priorite));
@@ -142,7 +142,7 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         NoeudArbre<E> g = noeud.filsGauche;
         // grand père du noeud
         NoeudArbre<E> gp = noeud.pere.pere;
-        
+
         if (noeud == p.filsDroit) {
             // la clef du noeud est plus grande que celle de son père.
             noeud.filsGauche = p;
@@ -160,7 +160,7 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
                 System.err.println("Etat incohérent : le noeud doit être forcement le fils gauche ou droit de son père");
             }
         }
-        
+
         if (gp != NIL) {
             if (p == gp.filsDroit) {
                 gp.filsDroit = noeud;

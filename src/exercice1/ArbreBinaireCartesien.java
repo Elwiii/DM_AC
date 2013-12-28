@@ -21,8 +21,6 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
 
     /* la racine de l'abc */
     protected NoeudArbre<E> root;
-    List<E> listClef = new ArrayList<>(); // Liste de toutes les clés de l'arbre, UNICITE
-    List<Double> listPriorite = new ArrayList<>(); // Liste de toutes les priorités de l'arbre, UNICITE
     List<NoeudArbre<E>> listNoeudArbres = new ArrayList<>(); // Liste de tous les noeuds de l'arbre, RECHERCHE
 
     /**
@@ -74,13 +72,17 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         }
 //        insererNoeudABC(root, new NoeudArbre(clef, priorite));
         //On insère d'abord dans l'AB dans tenir compte de la priorité
-        if (this.listClef.contains(clef) || this.listPriorite.contains(priorite)) { // On utilise des listes pour eviter de reparcourir tout l'arbre. Le parcour d'une liste est très simple, et la vitesse de calcul est augmentée.
+        int count = 0;
+        for (NoeudArbre n : listNoeudArbres) {
+            if (n.clef == clef || n.priorite == priorite) {
+                count++;
+            }
+        }
+        if (count != 0) {
             throw new Exercice1Exception("La clé : " + clef + ", et/ou la priorité : " + priorite + " existent deja dans l'arbre. Elles doivent etre uniques");
         } else {
             NoeudArbre<E> noeud = new NoeudArbre(clef, priorite);
             this.listNoeudArbres.add(noeud); // La liste de Noeud va nous permettre de recuperer (grace a l'unicite des clefs et des priorités) les noeuds que l'on recherche, cf: methode rechercheClef
-            this.listClef.add(clef);
-            this.listPriorite.add(priorite);
             insererNoeudAB(noeud);
             remonterNoeud(noeud);
         }
@@ -88,13 +90,14 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
 
     /**
      * On indique une clef dont on recherche l'existence dans l'arbre.
-     * 
+     *
      * @param clef
-     * @return Le noeud auquel la clef est associée. Si la clef n'existe pas, on renvoie NIL
+     * @return Le noeud auquel la clef est associée. Si la clef n'existe pas, on
+     * renvoie NIL
      */
-    public NoeudArbre rechercheClef(E clef) { 
-        for(int i = 0; i < this.listNoeudArbres.size(); i++){ //L'utilisation d'une liste de noeuds simplifie la recherche.
-            if(this.listNoeudArbres.get(i).clef == clef){
+    public NoeudArbre rechercheClef(E clef) {
+        for (int i = 0; i < this.listNoeudArbres.size(); i++) { //L'utilisation d'une liste de noeuds simplifie la recherche.
+            if (this.listNoeudArbres.get(i).clef == clef) {
                 return this.listNoeudArbres.get(i);
             }
         }

@@ -25,21 +25,13 @@ public class VerificationGenerale {
             System.out.println(abc.computeHauteur() + " / " + abc);
             abc.insererClef(2, 3);
             System.out.println(abc.computeHauteur() + " / " + abc);
-            abc.insererClef(10, 4);
+            abc.insererClef(1, 4);
             System.out.println(abc.computeHauteur() + " / " + abc);
             abc.insererClef(20, 30);
             System.out.println(abc.computeHauteur() + " / " + abc);
             abc.insererClef(12, 10);
             System.out.println(abc.computeHauteur() + " / " + abc);
             System.out.println("Noeud : " + abc.rechercheClef(2));
-            System.out.println("Cle");
-            for (int i = 0; i < abc.listClef.size(); i++) {
-                System.out.println(abc.listClef.get(i));
-            }
-            System.out.println("Prior");
-            for (int i = 0; i < abc.listPriorite.size(); i++) {
-                System.out.println(abc.listPriorite.get(i));
-            }
             System.out.println("Noeud");
             for (int i = 0; i < abc.listNoeudArbres.size(); i++) {
                 System.out.println(abc.listNoeudArbres.get(i));
@@ -58,14 +50,11 @@ public class VerificationGenerale {
 //            treap.insererClefTreap(4);
 //            System.out.println(treap.computeHauteur() + " / " + treap);
 //            System.out.println("Noeud : " + treap.rechercheClef(2));
-//            System.out.println("Cle");
-//            for (int i = 0; i < treap.listClef.size(); i++) {
-//                System.out.println(treap.listClef.get(i));
+//            System.out.println("Noeud");
+//            for (int i = 0; i < abc.listNoeudArbres.size(); i++) {
+//                System.out.println(abc.listNoeudArbres.get(i));
 //            }
-//            System.out.println("Prior");
-//            for (int i = 0; i < treap.listPriorite.size(); i++) {
-//                System.out.println(treap.listPriorite.get(i));
-//            }
+            
 //
 //            // UnionFind
 //            UnionFind<Integer> unionFind = new UnionFind<>();

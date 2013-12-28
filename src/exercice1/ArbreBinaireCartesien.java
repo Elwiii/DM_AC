@@ -60,6 +60,7 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
      *
      * @param clef
      * @param priorite
+     * @throws exercice1.Exercice1Exception
      */
     public void insererClef(E clef, double priorite) throws Exercice1Exception {
         if(clef ==null){

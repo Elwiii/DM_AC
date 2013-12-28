@@ -7,9 +7,6 @@ package exercice2;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,7 +16,7 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author CHAYEM Samy
+ * @author CHAYEM Samy & CARRARA Nicolas
  */
 public class Morphing {
 
@@ -38,20 +35,29 @@ public class Morphing {
     }
 
     /**
-     * Methode qui réalise le parsage(extraction) de tous les mots du fichier donné en paramétre du Constructeur
-     * On utilise la classe Scanner, comme Java nous le préconise (StringTokenizer étant inusité)
-     * 
-     * Problème avec les REGEX, donc pour le moment seul le separateur "espace" est pris en compte
+     * Methode qui réalise le parsage(extraction) de tous les mots du fichier
+     * donné en paramétre du Constructeur On utilise la classe Scanner, comme
+     * Java nous le préconise (StringTokenizer étant inusité)
+     *
+     * Problème avec les REGEX, donc pour le moment seul le separateur "espace"
+     * est pris en compte
      */
     public void parseTexteVersMot() {
         try {
-            Pattern pattern = Pattern.compile("[^\\ \\.\\*\\?\\(\\)\\[\\]\\{\\}\\^\\$\\|\\+]"); // pattern qui permet avec une regex de récuperer tous les mots entre les différents séparateur
-            Scanner scanner = new Scanner(new FileReader(this.cheminFichierEntre)); // seul le separateur "espace" est pris en compte (par défaut)
+            // pattern qui permet avec une regex de récuperer tous les mots entre les différents séparateur
+//            Pattern pattern = Pattern.compile("\\s*.\\s*"); 
+            // seul le separateur "espace" est pris en compte (par défaut)
+            Scanner scanner = new Scanner(new FileReader(cheminFichierEntre));
             String mot = null;
             while (scanner.hasNext()) {
-                mot = scanner.next();
-                listeMot.add(mot);
-                System.out.println(mot);
+                mot = scanner.next().replaceAll("[!,.?\":\\[\\]\\{\\}]", " ");
+                String[] mots = mot.split(" ");
+                for (int i = 0; i < mots.length; i++) {
+                    if (!mots[i].equals("")) {
+                        listeMot.add(mots[i]);
+                        System.out.println(mots[i]);
+                    }
+                }
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Morphing.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,27 +83,27 @@ public class Morphing {
 //            printWriter.close();
 //        }
 //    }
-
     /**
-     * Methode qui calcule la distance de levenshtein entre 2 mots.
-     * Algorithme wikipedia
-     * 
+     * Methode qui calcule la distance de levenshtein entre 2 mots. Algorithme
+     * wikipedia
+     *
      * Le passage en tableau de caractere n'est pas obligatoire mais je prefere
      * comme cela. On utilise des tableaux, donc autant en faire de même pour
      * nos strings ^^.
-     * 
+     *
      * @param source
      * @param target
-     * @return la distance de levenshtein entre les 2 mots, sous la forme d'un string
+     * @return la distance de levenshtein entre les 2 mots, sous la forme d'un
+     * string
      */
     public String distanceLevenshtein(String source, String target) {
         char[] chaineCharSource = source.toCharArray();
         char[] chaineCharTarget = target.toCharArray();
         int cost = 0; // cost représente si oui ou non 2 caracteres sont "egaux"
-        
+
         // Matrice de taille (chaineCharSource.length + 1) * (chaineCharTarget.length + 1) q3 du TD
         levenshtein = new int[chaineCharSource.length + 1][chaineCharTarget.length + 1];
-        
+
         for (int i = 0; i < chaineCharSource.length + 1; i++) {
             levenshtein[i][0] = i;
         }
@@ -122,7 +128,7 @@ public class Morphing {
     }
 
     /**
-     * 
+     *
      * @param a
      * @param b
      * @param c

@@ -25,8 +25,8 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
     /* Liste de tous les noeuds de l'arbre,pour la RECHERCHE de type search_list, sinon inutile*/
     protected List<NoeudArbre<E>> listNoeudArbres = new ArrayList<>();
 
-    protected final int SEARCH_LIST = 0;
-    protected final int SEARCH_TREE = 1;
+    public static final int SEARCH_LIST = 0;
+    public static final int SEARCH_TREE = 1;
 
     /**
      * La classe noeud de l'arbre binaire cartesien. Une clef et une priorité .

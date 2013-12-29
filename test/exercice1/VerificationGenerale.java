@@ -31,7 +31,7 @@ public class VerificationGenerale {
 //            System.out.println(abc.computeHauteur() + " / " + abc);
 //            abc.insererClef(12, 10);
 //            System.out.println(abc.computeHauteur() + " / " + abc);
-//            System.out.println("Noeud : " + abc.rechercheClef(1, abc.SEARCH_LIST));
+//            System.out.println("Noeud : " + abc.rechercheClef(1, ArbreBinaireCartesien.SEARCH_LIST));
 //            System.out.println("Noeud");
 //            for (int i = 0; i < abc.listNoeudArbres.size(); i++) {
 //                System.out.println(abc.listNoeudArbres.get(i));

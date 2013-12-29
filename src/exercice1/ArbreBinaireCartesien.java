@@ -92,12 +92,13 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
     }
     
     protected NoeudArbre recherchePriorite(double priorite, int typeRecherche) throws Exercice1Exception{
-        NoeudArbre result ;
+        NoeudArbre result = NIL;
         switch(typeRecherche){
             case SEARCH_LIST:
                 result =recherchePrioriteList(priorite);
                 break;
             case SEARCH_TREE :
+                if(root != NIL)
                 result = recherchePrioriteArbre(priorite, root);
                 break;
             default :
@@ -163,13 +164,14 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
      * @throws Exercice1Exception 
      */
     public NoeudArbre rechercheClef(E clef,int typeRecherche) throws Exercice1Exception{
-        NoeudArbre result ;
+        NoeudArbre result =NIL ;
         switch(typeRecherche){
             case SEARCH_LIST:
                 result =rechercheClefList(clef);
                 break;
             case SEARCH_TREE :
-                result = rechercheClefArbre(clef, root);
+                if(root != NIL)
+                    result = rechercheClefArbre(clef, root);
                 break;
             default :
                 throw new Exercice1Exception("type de recherche inconnu");
@@ -185,6 +187,8 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
      */
     private NoeudArbre rechercheClefArbre(E clef, NoeudArbre<E> noeudCourant) {
         NoeudArbre<E> result = NIL;
+        
+        System.out.println("noeudCourant : "+noeudCourant);
         if (noeudCourant.clef.compareTo(clef) == 0) {
             result = noeudCourant;
         } else if (noeudCourant.clef.compareTo(clef) < 0) {

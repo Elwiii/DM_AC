@@ -25,7 +25,11 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
     /* Liste de tous les noeuds de l'arbre,pour la RECHERCHE de type search_list, sinon inutile*/
     protected List<NoeudArbre<E>> listNoeudArbres = new ArrayList<>();
 
+    
+    /* indique qu'on veut chercher un élément en parcourant la liste des noeuds */
     public static final int SEARCH_LIST = 0;
+    
+    /* indique qu'on veut chercher un élément en parcourant l'arbre binaire cartésien */
     public static final int SEARCH_TREE = 1;
 
     /**
@@ -91,6 +95,13 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         remonterNoeud(noeud);
     }
     
+    /**
+     * 
+     * @param priorite
+     * @param typeRecherche
+     * @return
+     * @throws Exercice1Exception 
+     */
     protected NoeudArbre recherchePriorite(double priorite, int typeRecherche) throws Exercice1Exception{
         NoeudArbre result = NIL;
         switch(typeRecherche){

@@ -17,7 +17,7 @@ import java.util.List;
 public class ArbreBinaireCartesien<E extends Comparable<E>> {
 
     /* constante noeud à l'extrémité */
-    protected final NoeudArbre NIL = new NoeudArbre(null, -1);
+    protected final NoeudArbre NIL = setNIL();
 
     /* la racine de l'abc */
     protected NoeudArbre<E> root;
@@ -25,10 +25,9 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
     /* Liste de tous les noeuds de l'arbre,pour la RECHERCHE de type search_list, sinon inutile*/
     protected List<NoeudArbre<E>> listNoeudArbres = new ArrayList<>();
 
-    
     /* indique qu'on veut chercher un élément en parcourant la liste des noeuds */
     public static final int SEARCH_LIST = 0;
-    
+
     /* indique qu'on veut chercher un élément en parcourant l'arbre binaire cartésien */
     public static final int SEARCH_TREE = 1;
 
@@ -63,8 +62,20 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         }
     }
 
+    //workaround pour que NIL ait pour fils lui même
+    private NoeudArbre setNIL() {
+        NoeudArbre nil = new NoeudArbre(null, -1);
+        nil.filsDroit = nil;
+        nil.filsGauche = nil;
+        return nil;
+    }
+
     public ArbreBinaireCartesien() {
+
+//        NIL.filsDroit = NIL;
+//        NIL.filsGauche = NIL;
         root = NIL;
+//        System.out.println("NIL : " + NIL.filsDroit);
     }
 
     /**
@@ -78,12 +89,12 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         if (clef == null) {
             throw new Exercice1Exception("La clef ne peut être null");
         }
-        
-        if(rechercheClef(clef,SEARCH_TREE)!=NIL){ // SEARCH_LIST marche nickel
+
+        if (rechercheClef(clef, SEARCH_TREE) != NIL) { // SEARCH_LIST marche nickel
             throw new Exercice1Exception("La clef existe déjà");
         }
-        
-        if(recherchePriorite(priorite,SEARCH_TREE)!=NIL){ // SEARCH_LIST marche nickel
+
+        if (recherchePriorite(priorite, SEARCH_TREE) != NIL) { // SEARCH_LIST marche nickel
             throw new Exercice1Exception("La priorite existe déjà");
         }
 
@@ -94,69 +105,77 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         //On remonte ensuite le noeud en fonction de la priorité
         remonterNoeud(noeud);
     }
-    
+
     /**
-     * 
+     *
      * @param priorite
      * @param typeRecherche
      * @return
-     * @throws Exercice1Exception 
+     * @throws Exercice1Exception
      */
-    protected NoeudArbre recherchePriorite(double priorite, int typeRecherche) throws Exercice1Exception{
+    protected NoeudArbre recherchePriorite(double priorite, int typeRecherche) throws Exercice1Exception {
         NoeudArbre result = NIL;
-        switch(typeRecherche){
+        switch (typeRecherche) {
             case SEARCH_LIST:
-                result =recherchePrioriteList(priorite);
+                result = recherchePrioriteList(priorite);
                 break;
-            case SEARCH_TREE :
-                if(root != NIL)
+            case SEARCH_TREE:
+                if (root != NIL) {
                     result = recherchePrioriteArbre(priorite, root);
+                }
                 break;
-            default :
+            default:
                 throw new Exercice1Exception("type de recherche inconnu");
         }
         return result;
-        
+
     }
-    
+
     /**
-     * recherche le noeud de priorite priorite à partir du noeud courant (parcours l'arbre)
+     * recherche le noeud de priorite priorite à partir du noeud courant
+     * (parcours l'arbre)
+     *
      * @param priorite
      * @param noeudCourant
-     * @return 
+     * @return
      */
-    private NoeudArbre recherchePrioriteArbre(double priorite, NoeudArbre noeudCourant) throws Exercice1Exception{
-        NoeudArbre result = NIL ;
-        NoeudArbre resultGauche ;
-        NoeudArbre resultDroit ;
-        
-        if(priorite == noeudCourant.priorite){
-            result = noeudCourant;
-        }else{
-            // on peut optimiser ici, en faisant deja recherche sur le noeud gauche, puis si pas de resutat, on fait recherche sur noeudDroit
-            resultGauche = recherchePrioriteArbre(priorite,noeudCourant.filsGauche);
-            resultDroit = recherchePrioriteArbre(priorite,noeudCourant.filsDroit);
-            if(resultDroit == NIL && resultGauche != NIL ){
-                result = resultGauche;
-            }else if(resultDroit != NIL && resultGauche == NIL ){
-                result = resultDroit;
-            }else if(resultDroit != NIL && resultGauche != NIL ){
-                throw new Exercice1Exception("cas impossible, ça veut dire que deux noeuds ont même priorité dans l'arbre");
-            }else if(resultDroit == NIL && resultGauche == NIL ){
-                // do nothing
+    private NoeudArbre recherchePrioriteArbre(double priorite, NoeudArbre noeudCourant) throws Exercice1Exception {
+        NoeudArbre result = NIL;
+        NoeudArbre resultGauche;
+        NoeudArbre resultDroit;
+//        System.out.println("noeudCourant : " + noeudCourant);
+//        System.out.println("noeudCourant.filsDroit : " + noeudCourant.filsDroit);
+//        System.out.println("noeudCourant.filsGauche : " + noeudCourant.filsGauche);
+        if (noeudCourant != NIL) {
+            if (priorite == noeudCourant.priorite) {
+                result = noeudCourant;
+            } else {
+                // on peut optimiser ici, en faisant deja recherche sur le noeud gauche, puis si pas de resutat, on fait recherche sur noeudDroit
+                resultGauche = recherchePrioriteArbre(priorite, noeudCourant.filsGauche);
+                resultDroit = recherchePrioriteArbre(priorite, noeudCourant.filsDroit);
+                if (resultDroit == NIL && resultGauche != NIL) {
+                    result = resultGauche;
+                } else if (resultDroit != NIL && resultGauche == NIL) {
+                    result = resultDroit;
+                } else if (resultDroit != NIL && resultGauche != NIL) {
+                    throw new Exercice1Exception("cas impossible, ça veut dire que deux noeuds ont même priorité dans l'arbre");
+                } else if (resultDroit == NIL && resultGauche == NIL) {
+                    // do nothing
+                }
             }
         }
-        
         return result;
     }
-    
+
     /**
-     * cherche le noeud de priorite priorite en parcourant la liste de noeud (au lieu de parcourir l'arbre)
+     * cherche le noeud de priorite priorite en parcourant la liste de noeud (au
+     * lieu de parcourir l'arbre)
+     *
      * @param priorite
-     * @return 
+     * @return
      */
-    private NoeudArbre recherchePrioriteList(double priorite){
-        NoeudArbre result = NIL ;
+    private NoeudArbre recherchePrioriteList(double priorite) {
+        NoeudArbre result = NIL;
         int i = 0;
         while (result == NIL && i < listNoeudArbres.size()) {
             if (listNoeudArbres.get(i).priorite == priorite) {
@@ -166,49 +185,55 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         }
         return result;
     }
-    
+
     /**
      * recherche une clef dans l'abc
+     *
      * @param clef
      * @param typeRecherche
      * @return le noeud de clef clef.
-     * @throws Exercice1Exception 
+     * @throws Exercice1Exception
      */
-    public NoeudArbre rechercheClef(E clef,int typeRecherche) throws Exercice1Exception{
-        NoeudArbre result =NIL ;
-        switch(typeRecherche){
+    public NoeudArbre rechercheClef(E clef, int typeRecherche) throws Exercice1Exception {
+        NoeudArbre result = NIL;
+        switch (typeRecherche) {
             case SEARCH_LIST:
-                result =rechercheClefList(clef);
+                result = rechercheClefList(clef);
                 break;
-            case SEARCH_TREE :
-                if(root != NIL)
+            case SEARCH_TREE:
+                if (root != NIL) {
                     result = rechercheClefArbre(clef, root);
+                }
                 break;
-            default :
+            default:
                 throw new Exercice1Exception("type de recherche inconnu");
         }
         return result;
     }
 
     /**
-     * Recherche une clef en parcourant l'arbre (et non la liste) à partir d'un noeudCourant 
+     * Recherche une clef en parcourant l'arbre (et non la liste) à partir d'un
+     * noeudCourant
+     *
      * @param clef
      * @param noeudCourant
-     * @return 
+     * @return
      */
     private NoeudArbre rechercheClefArbre(E clef, NoeudArbre<E> noeudCourant) {
         NoeudArbre<E> result = NIL;
-        
+
 //        System.out.println("noeudCourant : "+noeudCourant);
         if (noeudCourant.clef.compareTo(clef) == 0) {
             result = noeudCourant;
         } else if (noeudCourant.clef.compareTo(clef) < 0) {
-            if(noeudCourant.filsDroit != NIL)
+            if (noeudCourant.filsDroit != NIL) {
                 result = rechercheClefArbre(clef, noeudCourant.filsDroit);
+            }
         } else if (noeudCourant.clef.compareTo(clef) > 0) {
-             if(noeudCourant.filsGauche != NIL)
+            if (noeudCourant.filsGauche != NIL) {
                 result = rechercheClefArbre(clef, noeudCourant.filsGauche);
-        } 
+            }
+        }
         return result;
     }
 

@@ -71,11 +71,7 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
     }
 
     public ArbreBinaireCartesien() {
-
-//        NIL.filsDroit = NIL;
-//        NIL.filsGauche = NIL;
         root = NIL;
-//        System.out.println("NIL : " + NIL.filsDroit);
     }
 
     /**

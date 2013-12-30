@@ -159,9 +159,11 @@ public class Graphe<E extends Comparable<E>> {
      * @param positionArrivee position du sommet d'arrivée dans le tableau
      * @return l'ensemble des sommets parcourus
      */
-    public List<E> getPath(int positionDepart, int positionArrivee){
+    public List<E> getPath(int positionDepart, int positionArrivee) throws Exercice2Exception{
         List<E> path = new ArrayList<>();
         getPath(positionDepart,positionArrivee,path);
+        if(!path.contains(vertex[positionArrivee]))
+            throw new Exercice2Exception("chemin introuvable, votre graphe n'est proablement pas un arbre");
         return path;
     }
     

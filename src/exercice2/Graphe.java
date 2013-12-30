@@ -107,14 +107,15 @@ public class Graphe<E extends Comparable<E>> {
         return edgesTriees;
 
     }
-    
+
     @Override
-    public String toString(){
-        System.out.println("Sommets du Graphe : "+ Arrays.asList(vertex));
-        for(int i = 0; i < vertex.length; i++){
-            System.out.println(vertex[i] + " : " + Arrays.asList(edges[i]));
+    public String toString() {
+        String s = "";
+        s = s + "Sommets du Graphe : \n    " + Arrays.asList(vertex) + "\n";
+        for (int i = 0; i < vertex.length; i++) {
+            s = s + vertex[i] + " : " + Arrays.asList(edges[i]) + "\n";
         }
-        return "";
+        return s;
     }
 
     /**

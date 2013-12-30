@@ -50,6 +50,8 @@ public class Graphe<E extends Comparable<E>> {
      * 5 pour chaque arête (u,v) de G prise par ordre de poids croissant 6 faire
      * ENSEMBLE-REPRÉSENTATIF (u) ≠ ENSEMBLE-REPRÉSENTATIF (v) 7 alors ajouter
      * l'arête (u,v) à l'ensemble E 8 UNION (u,v) 9 retourner E
+     * 
+     * @condition : le graphe ne doit pas être orienté ! i.e la matrice doit etre null en dessous ou au dessus d'une diagonale
      *
      * @return un arbre couvrant de poids minimal dans ce graphe.
      * @throws exercice2.Exercice2Exception
@@ -142,5 +144,7 @@ public class Graphe<E extends Comparable<E>> {
             return this.poid - t.poid;
         }
     }
+    
+   
 
 }

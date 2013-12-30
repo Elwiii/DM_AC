@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  *
+ * Test de parse et levenstein.
  * @author CHAYEM Samy
  */
 public class TestParseEtLevenstein {

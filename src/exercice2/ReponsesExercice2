@@ -1,8 +1,8 @@
-Q4) Cf MorphingTools.java
+Q4) Cf MorphingTools.java & TestParseEtLevenstein.java
 
-Q5) Cf MorphingTools.java
+Q5) Cf MorphingTools.java & TestParseEtLevenstein.java
 
-Q6) Cf Graphe.java
+Q6) Cf Graphe.java & Question6.java & VerificationGraphe.java
 
 KRUSKAL (G,w)
 1 E := ø
@@ -23,10 +23,12 @@ L'idée, c'est que chaque ensemble de Union find représente un arbre (donc acyc
 Avant de rajouter une arrête à E, on doit vérifié si les deux sommets reliés par cette arrête
 ne sont pas déja relié par un chemin de E.
 
-En réalité, au début, notre SD union find, c'est tout les sommets du graphe couvrant resultat mais
+En réalité, au début, notre SD union find, c'est tous les sommets du graphe couvrant resultat mais
 non reliés par des arrêtes. On parcourt toutes les arrêtes (triées par ordre croissant, car minimal).
-A chaque étape on vérifie que les deux sommets de cette arrête se sont pas déjà relié entre eux par un chemin
+A chaque étape on vérifie que les deux sommets de cette arrête ne sont pas déjà relié entre eux par un chemin
 dans la SD. Pour ça il faut qu'ils n'appartienent pas au même ensemble (au même graphe de la forêt).
 Si ils appartiennent au même graphe, alors le chemin existe déjà dans E, sinon on rajoute l'arrête. On
 doit faire l'union des ensembles disjoints pour indiquer que désormais, tous les sommets des deux ensembles
-sont lié par un chemin (grâce à la nouvelle jointure faite pas l'arrête rajouté à E).
+sont lié par un chemin (grâce à la nouvelle jointure faite pas l'arrête rajoutée à E).
+
+Q7)

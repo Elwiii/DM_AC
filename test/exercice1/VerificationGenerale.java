@@ -23,10 +23,13 @@ public class VerificationGenerale {
             ArbreBinaireCartesien<Integer> abc = new ArbreBinaireCartesien<>();
             abc.insererClef(1, 2);
             System.out.println(abc.computeHauteur() + " / " + abc);
-            abc.insererClef(2, 3);
+            abc.insererClef(8, 7);
             System.out.println(abc.computeHauteur() + " / " + abc);
-//            abc.insererClef(4, 4);
-//            System.out.println(abc.computeHauteur() + " / " + abc);
+            abc.insererClef(11, 4);
+            System.out.println(abc.computeHauteur() + " / " + abc);
+            abc.remove(11);
+            System.out.println(abc.computeHauteur() + " / " + abc);
+
 //            abc.insererClef(20, 30);
 //            System.out.println(abc.computeHauteur() + " / " + abc);
 //            abc.insererClef(12, 10);
@@ -36,7 +39,6 @@ public class VerificationGenerale {
 //            for (int i = 0; i < abc.listNoeudArbres.size(); i++) {
 //                System.out.println(abc.listNoeudArbres.get(i));
 //            }
-
             // Treap
 //            Treap<Integer> treap = new Treap<>();
 //            treap.insererClefTreap(3);
@@ -54,7 +56,6 @@ public class VerificationGenerale {
 //            for (int i = 0; i < abc.listNoeudArbres.size(); i++) {
 //                System.out.println(abc.listNoeudArbres.get(i));
 //            }
-            
 //
 //            // UnionFind
 //            UnionFind<Integer> unionFind = new UnionFind<>();

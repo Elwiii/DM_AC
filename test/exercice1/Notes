@@ -24,6 +24,11 @@ Test :
             -   Exception clé null -> ok
             -   Recherche d'une clé -> Pas implementer ? à voir
 
+NPE concernant le test de la priorité cf: recherchePrioritéArbre
+    -> Tout ce qui concerne les Listes marche niquel
+    -> RechercheClef pour Arbre marche niquel
+
+
     C) UnionFind :
             -   Insertion -> ok
             -   Union -> ok, le pere correspond a l'element de plus grande priorité

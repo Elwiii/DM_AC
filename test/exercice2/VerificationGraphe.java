@@ -16,7 +16,9 @@ import java.util.logging.Logger;
 public class VerificationGraphe {
     public static void main(String[] args){
         String[] vertex = {"A","B","C"};
-        Integer[][] edges = {{null,1,0},{null,4,0},{1,6,null}};
+        Integer[][] edges = {{null,1,0},
+                             {null,4,0},
+                             {1,6,null}};
         
         try {
             Graphe<String> g = new Graphe(vertex,edges);

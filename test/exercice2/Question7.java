@@ -6,9 +6,6 @@
 package exercice2;
 
 import exercice1.Exercice1Exception;
-import exercice2.Exercice2Exception;
-import exercice2.Graphe;
-import exercice2.MorphingTools;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,7 +26,7 @@ public class Question7 {
         int positionDepart = 1;
         int positionArrivee = 0;
         if (args.length != 3) {
-            System.err.println(USAGE+"\n\n"+"Vous n'avez pas spécifier de ficher ou vous n'avez pas spécifié la position"
+            System.err.println(USAGE+"\n\n"+"Vous n'avez pas spécifié de ficher ou vous n'avez pas spécifié la position"
                     + "\ndes sommets de départ et d'arrivé. Les paramètres suivant sont utilisé par default :\nfichier : " + DEFAULT_FILE+"\nposition départ : 1 (THERMES)\nposition arrivé : 0 (RONGEUR)\n\n");
         } else {
             path = args[0];

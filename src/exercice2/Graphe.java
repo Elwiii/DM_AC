@@ -153,6 +153,7 @@ public class Graphe<E extends Comparable<E>> {
     
     /**
      * Cherche le chemin pour aller d'un sommet de depart à un sommet d'arrivé
+     * @throws exercice2.Exercice2Exception
      * @condition le graphe doit être connexe et acyclique (i.e. un arbre) et
      * non orienté (ie c'est null sous la diagonale)
      * @param positionDepart position du sommet de depart dans le tableau vertex
@@ -163,7 +164,7 @@ public class Graphe<E extends Comparable<E>> {
         List<E> path = new ArrayList<>();
         getPath(positionDepart,positionArrivee,path);
         if(!path.contains(vertex[positionArrivee]))
-            throw new Exercice2Exception("chemin introuvable, votre graphe n'est proablement pas un arbre");
+            throw new Exercice2Exception("chemin introuvable, votre graphe n'est probablement pas un arbre");
         return path;
     }
     

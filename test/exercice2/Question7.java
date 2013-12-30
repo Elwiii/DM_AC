@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package exercice2;
 
 import exercice1.Exercice1Exception;
 import exercice2.Exercice2Exception;
 import exercice2.Graphe;
 import exercice2.MorphingTools;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,16 +19,22 @@ import java.util.logging.Logger;
  * @author CARRARA Nicolas
  */
 public class Question7 {
+
+    private static final String DEFAULT_FILE = "test/exercice2/fichierTestQuestion7";
     
-    private static final String DEFAULT_FILE="test/exercice2/fichierTestQuestion7";
-    
-    public static void main(String[] args){
+    private static final String USAGE = "USAGE : java Question7 pathFile positionDepart positionArrivee";
+
+    public static void main(String[] args) {
         String path = DEFAULT_FILE;
-        if(args.length != 1){
-            System.err.println("Vous n'avez pas spécifier de ficher,ce fichier a été utilisé par default : "+DEFAULT_FILE);
-            //System.exit(0);
-        }else{
+        int positionDepart = 1;
+        int positionArrivee = 0;
+        if (args.length != 3) {
+            System.err.println(USAGE+"\n\n"+"Vous n'avez pas spécifier de ficher ou vous n'avez pas spécifié la position"
+                    + "\ndes sommets de départ et d'arrivé. Les paramètres suivant sont utilisé par default :\nfichier : " + DEFAULT_FILE+"\nposition départ : 1 (THERMES)\nposition arrivé : 0 (RONGEUR)\n\n");
+        } else {
             path = args[0];
+            positionDepart = Integer.parseInt(args[1]);
+            positionArrivee = Integer.parseInt(args[2]);
         }
         List<String> listeMot = MorphingTools.parseTexteVersMot(path);
         Integer[][] edges = new Integer[listeMot.size()][listeMot.size()];
@@ -42,11 +48,13 @@ public class Question7 {
         }
         try {
             Graphe<String> g = new Graphe(vertex, edges);
-            System.out.println("" + g);
-            System.out.println("" + g.kurskal());
+            System.out.println("Graphe :\n" + g);
+            System.out.println("Graphe couvrant de poid minimal :\n" + g.kurskal());
+            g = g.kurskal();
+            System.out.println("Path : "+g.getPath(positionDepart, positionArrivee));
         } catch (Exercice2Exception | Exercice1Exception ex) {
             Logger.getLogger(Question6.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

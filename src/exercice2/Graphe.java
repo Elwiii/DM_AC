@@ -50,9 +50,10 @@ public class Graphe<E extends Comparable<E>> {
      * 5 pour chaque arête (u,v) de G prise par ordre de poids croissant 6 faire
      * ENSEMBLE-REPRÉSENTATIF (u) ≠ ENSEMBLE-REPRÉSENTATIF (v) 7 alors ajouter
      * l'arête (u,v) à l'ensemble E 8 UNION (u,v) 9 retourner E
-     * 
-     * @condition : le graphe ne doit pas être orienté ! i.e la matrice doit etre null en dessous ou au dessus d'une diagonale
      *
+     * @condition : le graphe ne doit pas être orienté ! i.e la matrice doit
+     * etre null en dessous ou au dessus d'une diagonale. On choisit en dessous
+     * comme convention
      * @return un arbre couvrant de poids minimal dans ce graphe.
      * @throws exercice2.Exercice2Exception
      * @throws exercice1.Exercice1Exception
@@ -144,7 +145,45 @@ public class Graphe<E extends Comparable<E>> {
             return this.poid - t.poid;
         }
     }
+
     
-   
+    /**
+     * Cherche le chemin pour aller d'un sommet de depart à un sommet d'arrivé
+     * @condition le graphe doit être connexe et acyclique (i.e. un arbre) et
+     * non orienté (ie c'est null sous la diagonale)
+     * @param positionDepart position du sommet de depart dans le tableau vertex
+     * @param positionArrivee position du sommet d'arrivée dans le tableau
+     * @return l'ensemble des sommets parcourus
+     */
+    public List<E> getPath(int positionDepart, int positionArrivee){
+        List<E> path = new ArrayList<>();
+        getPath(positionDepart,positionArrivee,path);
+        return path;
+    }
+    
+    /**
+     * Cherche le chemin pour aller d'un sommet de depart à un sommet d'arrivé en suposant qu'on a deja parcouru un
+     * certain nombre de sommets.
+     *
+     
+     * @condition le graphe doit être connexe et acyclique (i.e. un arbre) et
+     * non orienté (ie c'est null sous la diagonale)
+     * @param sommetParcouru les sommets parcourus jusque là
+     * @param positionDepart position du sommet de depart dans le tableau vertex
+     * @param positionArrivee position du sommet d'arrivée dans le tableau
+     * vertex
+     */
+    private void getPath(int positionDepart, int positionArrivee,List<E> sommetParcouru) {
+        sommetParcouru.add(vertex[positionDepart]);
+        boolean found = false;
+        int i = 0;
+        while (!found && i < vertex.length) {
+            if ((this.edges[positionDepart][i] != null || this.edges[i][positionDepart] != null) && !sommetParcouru.contains(vertex[i])) {
+                getPath(i, positionArrivee,sommetParcouru);
+            }
+            found = sommetParcouru.contains(vertex[positionArrivee]);
+            i++;
+        }
+    }
 
 }

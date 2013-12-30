@@ -2,4 +2,31 @@ Q4) Cf MorphingTools.java
 
 Q5) Cf MorphingTools.java
 
-Q6)
+Q6) 
+
+KRUSKAL (G,w)
+1 E := ø
+2 pour chaque sommet v de G
+3   faire CRÉER-ENSEMBLE (v)
+4 trier les arêtes de G par ordre croissant de poids w
+5 pour chaque arête (u,v) de G prise par ordre de poids croissant
+6   faire si ENSEMBLE-REPRÉSENTATIF (u) ≠ ENSEMBLE-REPRÉSENTATIF (v)
+7           alors ajouter l'arête (u,v) à l'ensemble E
+8                 UNION (u,v)
+9 retourner E
+
+cf http://fr.wikipedia.org/wiki/Algorithme_de_Kruskal
+
+Explication : 
+
+L'idée, c'est que chaque ensemble de Union find représente un arbre (donc acyclique). 
+Avant de rajouter une arrête à E, on doit vérifié si les deux sommets reliés par cette arrête
+ne sont pas déja relié par un chemin de E.
+
+En réalité, au début, notre SD union find, c'est tout les sommets du graphe couvrant resultat mais
+non reliés par des arrêtes. On parcourt toutes les arrêtes (triées par ordre croissant, car minimal).
+A chaque étape on vérifie que les deux sommets de cette arrête se sont pas déjà relié entre eux par un chemin
+dans la SD. Pour ça il faut qu'ils n'appartienent pas au même ensemble (au même graphe de la forêt).
+Si ils appartiennent au même graphe, alors le chemin existe déjà dans E, sinon on rajoute l'arrête. On
+doit faire l'union des ensembles disjoints pour indiquer que désormais, tous les sommets des deux ensembles
+sont lié par un chemin (grâce à la nouvelle jointure faite pas l'arrête rajouté à E).

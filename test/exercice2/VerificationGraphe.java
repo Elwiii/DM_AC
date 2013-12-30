@@ -22,6 +22,7 @@ public class VerificationGraphe {
         
         try {
             Graphe<String> g = new Graphe(vertex,edges);
+            System.out.println("g : "+g);
         } catch (Exercice2Exception ex) {
             Logger.getLogger(VerificationGraphe.class.getName()).log(Level.SEVERE, null, ex);
         }

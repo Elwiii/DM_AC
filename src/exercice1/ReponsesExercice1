@@ -1,1 +1,12 @@
-Q1) Optimisation : Effectuer la recherche de l'element pdt l'insertion. En effet, on parcourt 2 fois l'arbre lors de l'insertion.
+Q1) Cf ArbreBinaireCartesien.java ,Treap.java, VerificationArbre.java, VerificationGenerale.java et enfin VerificationHauteurTreap.java
+
+C'est ce dernier fichier qui nous permet de vérifier (de manière statistique) que la hauteur d'un treap est en log(n).
+
+Note : Il y a une optimisation à faire pour l'insertion : 
+Effectuer la recherche de l'element pdt l'insertion. 
+En effet, on parcourt 2 fois l'arbre lors de l'insertion, 
+une fois pour rechercher la non existence de l'élément et une fois pour l'insérer
+
+Q2) cf UnionFind.java, VerificationUnionFind.java et VerrificationGenerale.java
+
+Q3) cf UnionFind.java (les autres fonctions find et union), VerificationUnionFind.java et VerrificationGenerale.java

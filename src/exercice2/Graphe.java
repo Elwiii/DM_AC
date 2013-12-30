@@ -16,6 +16,10 @@ import java.util.List;
  * Implémentation de la structure Graphe, utilisation d'une matrice pour les
  * arrêtes
  *
+ * 
+ * A noter, pour représenter un graphe non orienté, laisser à null toute la partie
+ * sous la diagonale du tableau edges.
+ * 
  * @author CARRARA Nicolas
  * @param <E>
  */

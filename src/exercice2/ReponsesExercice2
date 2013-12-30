@@ -31,4 +31,9 @@ Si ils appartiennent au même graphe, alors le chemin existe déjà dans E, sino
 doit faire l'union des ensembles disjoints pour indiquer que désormais, tous les sommets des deux ensembles
 sont lié par un chemin (grâce à la nouvelle jointure faite pas l'arrête rajoutée à E).
 
-Q7)
+Q7) Cf Question7.java
+
+USAGE : java Question7 pathFile positionDepart positionArrivee
+
+Les positions sont indéxé à zéro et réprésente la position dans le fichier. On aurait
+pu mettre directement les mots, mais ça pose problème car il n'y a pas unicité des mots dans le texte.

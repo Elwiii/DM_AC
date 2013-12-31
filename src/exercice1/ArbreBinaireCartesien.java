@@ -365,6 +365,77 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         p.pere = noeud;
     }
 
+    public void remove(E clef) throws Exercice1Exception {
+        NoeudArbre<E> noeud = rechercheClef(clef, SEARCH_TREE);
+//        NoeudArbre noeudArbre = noeud;
+//        while (noeud.filsDroit != NIL && noeud.filsGauche != NIL) {
+            descendreNoeudUnCran(noeud);
+            noeud = rechercheClef(clef, SEARCH_TREE);
+            descendreNoeudUnCran(noeud);
+//            descendreNoeudUnCran(noeud);
+//            noeud = rechercheClef(clef, SEARCH_TREE);
+//            descendreNoeudUnCran(noeud);
+//        }
+        System.out.println("noeud : " + noeud);
+    }
+
+    private void descendreNoeudUnCran(NoeudArbre<E> noeud) {
+        // fils droit du noeud
+        NoeudArbre<E> d = noeud.filsDroit;
+        // fils gauche du noeud
+        NoeudArbre<E> g = noeud.filsGauche;
+        NoeudArbre newNoeud, newNoeudFilsDroit = null, newNoeudFilsGauche = null, newNoeudPetitFilsDroit_D, newNoeudPetitFilsGauche_D, newNoeudPetitFilsDroit_G, newNoeudPetitFilsGauche_G;
+//        System.out.println("n " + noeud);
+//        System.out.println("fd " + d);
+//        System.out.println("fg " + g);
+//        System.out.println("pG : " + g.priorite + ", pD : " + d.priorite);
+        if (noeud.filsGauche != NIL || noeud.filsDroit != NIL) {
+            if (g.priorite > d.priorite) {
+                newNoeud = g;
+                newNoeudFilsDroit = noeud;
+                newNoeudFilsGauche = g.filsGauche;
+                newNoeudPetitFilsDroit_D = d;
+                newNoeudPetitFilsGauche_D = g.filsDroit;
+                newNoeudFilsDroit.filsDroit = newNoeudPetitFilsDroit_D;
+                newNoeudFilsDroit.filsGauche = newNoeudPetitFilsGauche_D;
+                newNoeud.filsDroit = newNoeudFilsDroit;
+                newNoeud.filsGauche = newNoeudFilsGauche;
+                noeud = newNoeud;
+//                System.out.println("nNo : " + noeud);
+//                System.out.println("nfD : " + newNoeudFilsDroit);
+//                System.out.println("nfG : " + newNoeudFilsGauche); //Fonctionne niquel
+            }
+            if (g.priorite < d.priorite) {
+                newNoeud = d;
+                newNoeudFilsDroit = d.filsDroit;
+                newNoeudFilsGauche = noeud;
+                newNoeudPetitFilsDroit_G = d.filsGauche;
+                newNoeudPetitFilsGauche_G = g;
+                newNoeudFilsGauche.filsDroit = newNoeudPetitFilsDroit_G;
+                newNoeudFilsGauche.filsGauche = newNoeudPetitFilsGauche_G;
+                newNoeud.filsDroit = newNoeudFilsDroit;
+                newNoeud.filsGauche = newNoeudFilsGauche;
+                noeud = newNoeud;
+//                System.out.println("nNo : " + noeud);
+//                System.out.println("nfD : " + newNoeudFilsDroit);
+//                System.out.println("nfG : " + newNoeudFilsGauche); //Fonctionne niquel
+            }
+        }
+        System.out.println("Nouveau Noeud : " + noeud);//la descente se fait correctement
+        System.out.println("Nouveau nfD : " + newNoeudFilsDroit);
+        System.out.println("Nouveau nfG : " + newNoeudFilsGauche); //Fonctionne niq
+
+        if (noeud.filsDroit == NIL && noeud.filsGauche == NIL) {
+            if (noeud.clef.compareTo(noeud.pere.clef) < 0) {
+                noeud.pere.filsGauche = NIL;
+            }
+            if (noeud.clef.compareTo(noeud.pere.clef) > 0) {
+                noeud.pere.filsDroit = NIL;
+            }
+        } //Fonctionne niquel
+//        return noeud;
+    }
+
     /**
      * Calculer la hauteur du ABC intermediaire
      *

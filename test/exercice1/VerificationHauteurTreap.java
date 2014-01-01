@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author CARRARA Nicolas
+ * @author CARRARA Nicolas et CHAYEM Samy
  */
 public class VerificationHauteurTreap {
 

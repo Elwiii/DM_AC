@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author CHAYEM Samy
+ * @author CARRARA Nicolas et CHAYEM Samy
  */
 public class VerificationGenerale {
 

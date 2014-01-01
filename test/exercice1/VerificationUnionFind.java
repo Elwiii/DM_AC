@@ -3,22 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package exercice1;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
-
 /**
  *
- * @author CARRARA Nicolas
+ * @author CARRARA Nicolas et CHAYEM Samy
  */
 public class VerificationUnionFind {
-    
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         try {
             UnionFind<Integer> uf = new UnionFind<>();
 //            uf.makeset(1);
@@ -51,7 +47,7 @@ public class VerificationUnionFind {
 //            System.out.println("uf : "+uf);
 //            
 //            System.out.println("uf.union(5, null) : "+uf.union(5, null));
-            
+
             // test compression
             uf = new UnionFind<>();
             uf.makeset(1);
@@ -68,12 +64,12 @@ public class VerificationUnionFind {
 //            System.out.println("uf.find(8) : "+uf.find(8,UnionFind.COMPRESSION));
 //            System.out.println("uf.find(10) : "+uf.find(10,UnionFind.COMPRESSION));
 //            
-            System.out.println("uf.union(1, 3) : "+uf.union(1, 3,UnionFind.COMPRESSION));
-            System.out.println("uf : "+uf);
-            System.out.println("uf.union(3, 4) : "+uf.union(3, 4,UnionFind.COMPRESSION));
-            System.out.println("uf : "+uf);
-            System.out.println("uf.union(7, 3) : "+uf.union(7, 3,UnionFind.COMPRESSION));
-            System.out.println("uf : "+uf);
+            System.out.println("uf.union(1, 3) : " + uf.union(1, 3, UnionFind.COMPRESSION));
+            System.out.println("uf : " + uf);
+            System.out.println("uf.union(3, 4) : " + uf.union(3, 4, UnionFind.COMPRESSION));
+            System.out.println("uf : " + uf);
+            System.out.println("uf.union(7, 3) : " + uf.union(7, 3, UnionFind.COMPRESSION));
+            System.out.println("uf : " + uf);
 //            uf.union(2, 6,UnionFind.COMPRESSION);
 //            uf.union(2, 5,UnionFind.COMPRESSION);
 //            uf.union(8, 5,UnionFind.COMPRESSION);
@@ -88,5 +84,5 @@ public class VerificationUnionFind {
         }
 
     }
-    
+
 }

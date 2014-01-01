@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * dont les noueuds sont les mots extraits et les poids des arêtes sont les
  * distances d'editions
  *
- * @author CARRARA Nicolas
+ * @author CARRARA Nicolas et CHAYEM Samy
  */
 public class Question6 {
 

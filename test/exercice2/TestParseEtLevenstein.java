@@ -7,11 +7,11 @@ package exercice2;
 
 import java.util.List;
 
-
 /**
  *
  * Test de parse et levenstein.
- * @author CHAYEM Samy
+ *
+ * @author CARRARA Nicolas et CHAYEM Samy
  */
 public class TestParseEtLevenstein {
 
@@ -25,7 +25,7 @@ public class TestParseEtLevenstein {
         System.out.println("Liste :\n" + listeMot);
         for (int i = 0; i < listeMot.size(); i++) {
             for (int j = 0; j < listeMot.size(); j++) {
-                System.out.println("<"+listeMot.get(i)+","+listeMot.get(j)+"> : "+MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j)));
+                System.out.println("<" + listeMot.get(i) + "," + listeMot.get(j) + "> : " + MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j)));
             }
         }
     }

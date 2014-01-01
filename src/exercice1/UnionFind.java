@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * cf http://en.wikipedia.org/wiki/Disjoint-set_data_structure
  *
- * @author CARRARA Nicolas
+ * @author CARRARA Nicolas et CHAYEM Samy
  * @param <E>
  */
 public class UnionFind<E> {
@@ -55,15 +55,14 @@ public class UnionFind<E> {
             if (this == MISSING) {
                 result = "MISSING";
             } /*else if (this == ROOT) {
-                result = "ROOT";
-            } */else {
+             result = "ROOT";
+             } */ else {
                 String pereData = pere.data + "";
                 if (pere.data == null) {
                     pereData = "root";
                 }
-                result = "(" + "" + data + ","+priorite+ " : <" + pereData + ">)";
+                result = "(" + "" + data + "," + priorite + " : <" + pereData + ">)";
             }
-
             return result;
         }
     }

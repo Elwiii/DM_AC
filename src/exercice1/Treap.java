@@ -9,7 +9,7 @@ package exercice1;
  *
  * Implémentation de la structure de donnée probabiliste TREAP.
  *
- * @author CARRARA Nicolas
+ * @author CARRARA Nicolas et CHAYEM Samy
  * @param <E>
  */
 public class Treap<E extends Comparable<E>> extends ArbreBinaireCartesien<E> {
@@ -29,10 +29,9 @@ public class Treap<E extends Comparable<E>> extends ArbreBinaireCartesien<E> {
             throw new Exercice1Exception("La clef ne peut être null");
         }
         double priorite = Math.random();
-        while(recherchePriorite(priorite,SEARCH_TREE)!=NIL){
+        while (recherchePriorite(priorite, SEARCH_TREE) != NIL) {
             priorite = Math.random();
         }
-        
         NoeudArbre<E> noeud = new NoeudArbre(clef, priorite);
         this.listNoeudArbres.add(noeud); // La liste de Noeud va nous permettre de recuperer (grace a l'unicite des clefs et des priorités) les noeuds que l'on recherche, cf: methode rechercheClef
         insererNoeudAB(noeud);

@@ -16,11 +16,11 @@ import java.util.List;
  * Implémentation de la structure Graphe, utilisation d'une matrice pour les
  * arrêtes
  *
- * 
- * A noter, pour représenter un graphe non orienté, laisser à null toute la partie
- * sous la diagonale du tableau edges.
- * 
- * @author CARRARA Nicolas
+ *
+ * A noter, pour représenter un graphe non orienté, laisser à null toute la
+ * partie sous la diagonale du tableau edges.
+ *
+ * @author CARRARA Nicolas et CHAYEM Samy
  * @param <E>
  */
 public class Graphe<E extends Comparable<E>> {
@@ -150,9 +150,9 @@ public class Graphe<E extends Comparable<E>> {
         }
     }
 
-    
     /**
      * Cherche le chemin pour aller d'un sommet de depart à un sommet d'arrivé
+     *
      * @throws exercice2.Exercice2Exception
      * @condition le graphe doit être connexe et acyclique (i.e. un arbre) et
      * non orienté (ie c'est null sous la diagonale)
@@ -160,19 +160,20 @@ public class Graphe<E extends Comparable<E>> {
      * @param positionArrivee position du sommet d'arrivée dans le tableau
      * @return l'ensemble des sommets parcourus
      */
-    public List<E> getPath(int positionDepart, int positionArrivee) throws Exercice2Exception{
+    public List<E> getPath(int positionDepart, int positionArrivee) throws Exercice2Exception {
         List<E> path = new ArrayList<>();
-        getPath(positionDepart,positionArrivee,path);
-        if(!path.contains(vertex[positionArrivee]))
+        getPath(positionDepart, positionArrivee, path);
+        if (!path.contains(vertex[positionArrivee])) {
             throw new Exercice2Exception("chemin introuvable, votre graphe n'est probablement pas un arbre");
+        }
         return path;
     }
-    
+
     /**
-     * Cherche le chemin pour aller d'un sommet de depart à un sommet d'arrivé en suposant qu'on a deja parcouru un
-     * certain nombre de sommets.
+     * Cherche le chemin pour aller d'un sommet de depart à un sommet d'arrivé
+     * en suposant qu'on a deja parcouru un certain nombre de sommets.
      *
-     
+     *
      * @condition le graphe doit être connexe et acyclique (i.e. un arbre) et
      * non orienté (ie c'est null sous la diagonale)
      * @param sommetParcouru les sommets parcourus jusque là
@@ -180,13 +181,13 @@ public class Graphe<E extends Comparable<E>> {
      * @param positionArrivee position du sommet d'arrivée dans le tableau
      * vertex
      */
-    private void getPath(int positionDepart, int positionArrivee,List<E> sommetParcouru) {
+    private void getPath(int positionDepart, int positionArrivee, List<E> sommetParcouru) {
         sommetParcouru.add(vertex[positionDepart]);
         boolean found = false;
         int i = 0;
         while (!found && i < vertex.length) {
             if ((this.edges[positionDepart][i] != null || this.edges[i][positionDepart] != null) && !sommetParcouru.contains(vertex[i])) {
-                getPath(i, positionArrivee,sommetParcouru);
+                getPath(i, positionArrivee, sommetParcouru);
             }
             found = sommetParcouru.contains(vertex[positionArrivee]);
             i++;

@@ -15,38 +15,25 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author CHAYEM Samy & CARRARA Nicolas
+ * @author CARRARA Nicolas et CHAYEM Samy
  */
 public class MorphingTools {
-
-//    protected String cheminFichierEntre;
-//    protected List<String> listeMot; // List contenant l'extraction des mots d'un fichier
-//    protected int[][] levenshtein; // matrice
-//    protected int distanceLevenshtein;
-
-//    /**
-//     *
-//     * @param cheminFichierEntre Path du fichier contenant le texte a parsé
-//     */
-//    public Morphing(String cheminFichierEntre) {
-//        this.cheminFichierEntre = cheminFichierEntre;
-//        listeMot = new ArrayList<>();
-//    }
 
     /**
      * Methode qui réalise le parsage(extraction) de tous les mots du fichier
      * donné en paramétre du Constructeur On utilise la classe Scanner, comme
-     * Java nous le préconise (StringTokenizer étant inusité).
-     * C'est un peu un workaround pour le moment, il y a surement une manière
-     * de faire plus propre mais on maitrise pas assez les regexs et scanner.
+     * Java nous le préconise (StringTokenizer étant inusité). C'est un peu un
+     * workaround pour le moment, il y a surement une manière de faire plus
+     * propre mais on maitrise pas assez les regexs et scanner.
+     *
      * @param pathInput
-     * @return 
+     * @return
      */
     public static List<String> parseTexteVersMot(String pathInput) {
         List<String> result = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(new FileReader(pathInput));
-            String mot ;
+            String mot;
             while (scanner.hasNext()) {
                 mot = scanner.next().replaceAll("[!,.;?\":\\[\\]\\{\\}]", " ");
                 String[] mots = mot.split(" ");
@@ -59,7 +46,7 @@ public class MorphingTools {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MorphingTools.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return result;
     }
 
@@ -79,7 +66,7 @@ public class MorphingTools {
     public static int distanceLevenshtein(String source, String target) {
         char[] chaineCharSource = source.toCharArray();
         char[] chaineCharTarget = target.toCharArray();
-        int cost = 0; // cost représente si oui ou non 2 caracteres sont "egaux"
+        int cost; // cost représente si oui ou non 2 caracteres sont "egaux"
 
         // Matrice de taille (chaineCharSource.length + 1) * (chaineCharTarget.length + 1) q3 du TD
         int[][] levenshtein = new int[chaineCharSource.length + 1][chaineCharTarget.length + 1];
@@ -104,7 +91,7 @@ public class MorphingTools {
                 levenshtein[i][j] = minimum((levenshtein[i - 1][j] + 1), (levenshtein[i][j - 1] + 1), (levenshtein[i - 1][j - 1] + cost));
             }
         }
-        return /*"<" + source + ", " + target + ">, la distance de Levenshtein = " + */levenshtein[chaineCharSource.length][chaineCharTarget.length];
+        return levenshtein[chaineCharSource.length][chaineCharTarget.length];
     }
 
     /**
@@ -117,25 +104,5 @@ public class MorphingTools {
     private static int minimum(int a, int b, int c) {
         return Math.min(Math.min(a, b), c);
     }
-    
-    
-//    /**
-//     * Methode qui ecrit dans un fichier la liste des mots extraits du fichier passé en entrée
-//     * Pas demandé
-//     * @param cheminFichierSorti
-//     */
-//    public void extractionMot(String cheminFichierSorti) {
-//        PrintWriter printWriter = null;
-//        try {
-//            printWriter = new PrintWriter(new FileWriter(cheminFichierSorti));
-//            for (int i = 0; i < this.listeMot.size(); i++) {
-//                printWriter.println(this.listeMot.get(i));
-//                printWriter.flush();
-//            }
-//        } catch (IOException ex) {
-//            Logger.getLogger(Morphing.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            printWriter.close();
-//        }
-//    }
+
 }

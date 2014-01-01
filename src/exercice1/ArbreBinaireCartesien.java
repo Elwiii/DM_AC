@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Implémentation de la structure de donnée ARBRE CARTESIEN.
  *
- * @author CARRARA Nicolas
+ * @author CARRARA Nicolas et CHAYEM Samy
  * @param <E>
  */
 public class ArbreBinaireCartesien<E extends Comparable<E>> {

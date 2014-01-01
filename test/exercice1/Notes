@@ -1,20 +1,11 @@
-// pour les abc/treap , verifier si la clef existe pas deja avant de l'insert ?
 Test : 
     A) ArbreBinaireCartesien : Basé sur le TD
-            -   Ajoute 2 fois le même element(ie même clé) -> à voir
-            -   Si 2 elements possédent la même propriété, le pere correspond à celui qui a été instancié en 1er -> à voir ? TD : la priorité d'un noeud est plus grande que la priorité de ses fils
+            -   Unicité pour les clefs et priorités -> ok
             -   L'insertion -> ok
             -   Calcul de la hauteur d'un arbre -> ok
-            -   Suppression d'un noeud -> Pas implementer ? à voir
+            -   Suppression d'un noeud -> Ne fonctionne pas
             -   Exception clé null -> ok
-            -   Recherche d'une clé -> Pas implementer ? à voir
-            -   Diviser -> Pas implementer, mais ça je ne pense pas que ce soit réellement demandé
-
-        Les propriétés de certaines méthodes me gênent : 
-            -   protected void insererNoeudAB(NoeudArbre<E> noeud)
-            -   protected void remonterNoeud(NoeudArbre<E> noeud)
-            Pourquoi protected ? C'est un choix de ta part de laisser l'utilisateur inserer un noeud sans prendre en compte la priorité, puis de lui permettre de le remonter manuellement ? 
-            Puis l'utilisation de ces méthodes est assez laborieuse dans le test.
+            -   Recherche d'une clé -> ok
 
 
     B) Treap : même reflexion que pour ABC
@@ -22,12 +13,7 @@ Test :
             -   Calcul de la hauteur d'un arbre -> ok
             -   Suppression d'un noeud -> Pas implementer ? à voir
             -   Exception clé null -> ok
-            -   Recherche d'une clé -> Pas implementer ? à voir
-
-NPE concernant le test de la priorité cf: recherchePrioritéArbre
-    -> Tout ce qui concerne les Listes marche niquel
-    -> RechercheClef pour Arbre marche niquel
-
+            -   Recherche d'une clé -> ok
 
     C) UnionFind :
             -   Insertion -> ok

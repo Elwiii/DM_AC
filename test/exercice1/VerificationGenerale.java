@@ -35,7 +35,7 @@ public class VerificationGenerale {
             System.out.println(abc.computeHauteur() + " / " + abc);
 //            System.out.println("Fin : " + abc.remove(8));
 //            abc.remove(8);
-            abc.enlever(11);
+            abc.supprimer(11);
             System.out.println(abc.computeHauteur() + " / " + abc);
 
 //            abc.insererClef(20, 30);

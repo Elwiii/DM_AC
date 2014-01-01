@@ -358,23 +358,19 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         p.pere = noeud;
     }
 
-    public void enlever(E clef) throws Exercice1Exception {
-        NoeudArbre<E> noeud = rechercheClef(clef, SEARCH_TREE);
-//        System.out.println("noeud0 : " + noeud);
-        while (!(noeud.filsDroit == NIL && noeud.filsGauche == NIL)) {
-            descNoeudUnCran(noeud);
-            noeud = rechercheClef(clef, SEARCH_TREE);
-            System.out.println("Final " + this);
-            System.out.println("Noeud Final " + noeud);
-        }
-        if (noeud.filsDroit == NIL && noeud.filsGauche == NIL) {
-            if (noeud.clef.compareTo(noeud.pere.clef) < 0) {
-                noeud.pere.filsGauche = NIL;
-            }
-            if (noeud.clef.compareTo(noeud.pere.clef) > 0) {
-                noeud.pere.filsDroit = NIL;
-            }
-        }
+    public void supprimer(E clef) throws Exercice1Exception {
+        NoeudArbre<E> noeud = this.rechercheClef(clef, SEARCH_TREE);
+        if(noeud == NIL)
+            throw new Exercice1Exception("clef "+clef+" inexistante");
+        while(!(noeud.filsDroit == NIL && noeud.filsGauche == NIL))
+            descendreNoeudUnCran(noeud);
+        
+        if(noeud.pere.filsDroit == noeud)
+            noeud.pere.filsDroit = NIL;
+        else if(noeud.pere.filsGauche == noeud)
+            noeud.pere.filsGauche = NIL;
+        else throw new Exercice1Exception("Etat de l'arbre corrompu, le noeud "+noeud+" n'est ni le fils droit ni le fils gauche de son père");
+            
     }
 
     /**
@@ -383,68 +379,44 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
      *
      * @param noeud
      */
-    private void descNoeudUnCran(NoeudArbre<E> noeud) {
+    private void descendreNoeudUnCran(NoeudArbre<E> noeud) throws Exercice1Exception {
         // père du noeud
         NoeudArbre<E> p = noeud.pere;
         // fils droit du noeud
         NoeudArbre<E> d = noeud.filsDroit;
         // fils gauche du noeud
         NoeudArbre<E> g = noeud.filsGauche;
-        // grand père du noeud
-        NoeudArbre<E> gp = noeud.pere.pere;
-
-        if (d.priorite > g.priorite) {
-            if (p != NIL) {
-                if (p == gp.filsDroit) {
-                    noeud.pere.pere.filsDroit = noeud.pere;
-                }
-                if (p == gp.filsGauche) {
-                    noeud.pere.pere.filsGauche = noeud.pere;
-                }
-            }
-            noeud.pere = d;
-            noeud.pere.pere = p;
-            noeud.filsDroit = d.filsGauche;
-            d.filsGauche = noeud;
-            d.pere = p;
-            if (p == NIL) {
-                root = noeud;
-            }
-
-//            if (gp.filsDroit == p) {
-//                noeud.pere.pere.filsDroit = noeud.pere;
-//            }
-//            if (gp.filsGauche == p) {
-//                noeud.pere.pere.filsGauche = noeud.pere;
-//            }
-        }
-        if (d.priorite < g.priorite) {
-            if (p != NIL && p == gp.filsDroit) {
-                if (p == gp.filsDroit) {
-                    noeud.pere.pere.filsDroit = noeud.pere;
-                }
-                if (p == gp.filsGauche) {
-                    noeud.pere.pere.filsGauche = noeud.pere;
-                }
-            }
-            noeud.pere = g;
-            noeud.pere.pere = p;
-            noeud.filsGauche = g.filsDroit;
-            g.filsDroit = noeud;
+        // noeud temporaire
+        NoeudArbre<E> temp ;
+        if(g.priorite > d.priorite){
             g.pere = p;
-            if (p == NIL) {
-                root = noeud;
-            }
-
-            System.out.println("Noeud : " + noeud);//la descente se fait correctement
-            System.out.println("P : " + noeud.pere);
-            System.out.println("D : " + noeud.filsDroit);
-            System.out.println("G : " + noeud.filsGauche);
-            System.out.println("GP : " + noeud.pere.pere);
-            System.out.println("GP_D : " + noeud.pere.pere.filsDroit);
-            System.out.println("GP_G : " + noeud.pere.pere.filsGauche);
-            //Fonctionne niquel
+            temp = g.filsDroit;
+            g.filsDroit = noeud;
+            
+            if(noeud == p.filsDroit)
+                p.filsDroit = g;
+            else
+                p.filsGauche = g;
+            
+            noeud.filsGauche = temp;
+            noeud.pere = g;
+            
+        }else if(g.priorite < d.priorite){
+            d.pere = p;
+            temp = d.filsGauche;
+            d.filsGauche = noeud;
+            
+            if(noeud == p.filsDroit)
+                p.filsDroit = d;
+            else
+                p.filsGauche = d;
+            
+            noeud.filsDroit = temp;
+            noeud.pere = d;
+        }else{
+            throw new Exercice1Exception("Arbre erronée, priorité dupliquée");
         }
+        
     }
 
     /**

@@ -2,8 +2,8 @@ Test :
     A) ArbreBinaireCartesien : Basé sur le TD
             -   Unicité pour les clefs et priorités -> ok
             -   L'insertion -> ok
-            -   Calcul de la hauteur d'un arbre -> ok
-            -   Suppression d'un noeud -> Ne fonctionne pas
+            -   Calcul de la hauteur d'un arbre -> ok, même après une suppression -> OUI
+            -   Suppression d'un noeud -> ok
             -   Exception clé null -> ok
             -   Recherche d'une clé -> ok
 

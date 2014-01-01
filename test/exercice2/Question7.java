@@ -18,16 +18,16 @@ import java.util.logging.Logger;
 public class Question7 {
 
     private static final String DEFAULT_FILE = "test/exercice2/fichierTestQuestion7";
-    
+
     private static final String USAGE = "USAGE : java Question7 pathFile positionDepart positionArrivee";
 
     public static void main(String[] args) {
         String path = DEFAULT_FILE;
-        int positionDepart = 1;
-        int positionArrivee = 0;
+        int positionDepart = 0;
+        int positionArrivee = 5;
         if (args.length != 3) {
-            System.err.println(USAGE+"\n\n"+"Vous n'avez pas spécifié de ficher ou vous n'avez pas spécifié la position"
-                    + "\ndes sommets de départ et d'arrivé. Les paramètres suivant sont utilisé par default :\nfichier : " + DEFAULT_FILE+"\nposition départ : 1 (THERMES)\nposition arrivé : 0 (RONGEUR)\n\n");
+            System.err.println(USAGE + "\n\n" + "Vous n'avez pas spécifié de ficher ou vous n'avez pas spécifié la position"
+                    + "\ndes sommets de départ et d'arrivé. Les paramètres suivant sont utilisé par default :\nfichier : " + DEFAULT_FILE + "\nposition départ : 1 (THERMES)\nposition arrivé : 0 (RONGEUR)\n\n");
         } else {
             path = args[0];
             positionDepart = Integer.parseInt(args[1]);
@@ -48,7 +48,7 @@ public class Question7 {
             System.out.println("Graphe :\n" + g);
             System.out.println("Graphe couvrant de poid minimal :\n" + g.kurskal());
             g = g.kurskal();
-            System.out.println("Path : "+g.getPath(positionDepart, positionArrivee));
+            System.out.println("Path : " + g.getPath(positionDepart, positionArrivee));
         } catch (Exercice2Exception | Exercice1Exception ex) {
             Logger.getLogger(Question6.class.getName()).log(Level.SEVERE, null, ex);
         }

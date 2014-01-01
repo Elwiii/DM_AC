@@ -22,7 +22,7 @@ public class Question7 {
 
     public static void main(String[] args) {
         String path = DEFAULT_FILE;
-        int positionDepart = 5;
+        int positionDepart = 1;
         int positionArrivee = 0;
         if (args.length != 3) {
             System.err.println(USAGE + "\n\n" + "Vous n'avez pas spécifié de ficher ou vous n'avez pas spécifié la position"

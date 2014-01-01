@@ -62,7 +62,6 @@ public class VerificationGraphe {
             Graphe graphe2 = new Graphe(vertex2, edges2);
             System.out.println(graphe2.toString());
             System.out.println(graphe2.kurskal());
-            // Fonctionne niquel
         } catch (Exercice2Exception | Exercice1Exception ex) {
             Logger.getLogger(VerificationGraphe.class.getName()).log(Level.SEVERE, null, ex);
         }

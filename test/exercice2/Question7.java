@@ -23,8 +23,8 @@ public class Question7 {
 
     public static void main(String[] args) {
         String path = DEFAULT_FILE;
-        int positionDepart = 0;
-        int positionArrivee = 5;
+        int positionDepart = 5;
+        int positionArrivee = 0;
         if (args.length != 3) {
             System.err.println(USAGE + "\n\n" + "Vous n'avez pas spécifié de ficher ou vous n'avez pas spécifié la position"
                     + "\ndes sommets de départ et d'arrivé. Les paramètres suivant sont utilisé par default :\nfichier : " + DEFAULT_FILE + "\nposition départ : 1 (THERMES)\nposition arrivé : 0 (RONGEUR)\n\n");

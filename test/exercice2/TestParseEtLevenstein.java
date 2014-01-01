@@ -21,7 +21,6 @@ public class TestParseEtLevenstein {
     public static void main(String[] args) {
         // TODO code application logic here
         List<String> listeMot = MorphingTools.parseTexteVersMot("test/exercice2/fichierTestParse");
-//        List<String> listeMot = MorphingTools.parseTexteVersMot("C:\\Users\\Katia\\Desktop\\test.txt");
         System.out.println("Liste :\n" + listeMot);
         for (int i = 0; i < listeMot.size(); i++) {
             for (int j = 0; j < listeMot.size(); j++) {

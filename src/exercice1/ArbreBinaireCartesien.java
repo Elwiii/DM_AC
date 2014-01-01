@@ -360,17 +360,21 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
 
     public void supprimer(E clef) throws Exercice1Exception {
         NoeudArbre<E> noeud = this.rechercheClef(clef, SEARCH_TREE);
-        if(noeud == NIL)
-            throw new Exercice1Exception("clef "+clef+" inexistante");
-        while(!(noeud.filsDroit == NIL && noeud.filsGauche == NIL))
+        if (noeud == NIL) {
+            throw new Exercice1Exception("clef " + clef + " inexistante");
+        }
+        while (!(noeud.filsDroit == NIL && noeud.filsGauche == NIL)) {
             descendreNoeudUnCran(noeud);
-        
-        if(noeud.pere.filsDroit == noeud)
+        }
+
+        if (noeud.pere.filsDroit == noeud) {
             noeud.pere.filsDroit = NIL;
-        else if(noeud.pere.filsGauche == noeud)
+        } else if (noeud.pere.filsGauche == noeud) {
             noeud.pere.filsGauche = NIL;
-        else throw new Exercice1Exception("Etat de l'arbre corrompu, le noeud "+noeud+" n'est ni le fils droit ni le fils gauche de son père");
-            
+        } else {
+            throw new Exercice1Exception("Etat de l'arbre corrompu, le noeud " + noeud + " n'est ni le fils droit ni le fils gauche de son père");
+        }
+
     }
 
     /**
@@ -387,42 +391,46 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         // fils gauche du noeud
         NoeudArbre<E> g = noeud.filsGauche;
         // noeud temporaire
-        NoeudArbre<E> temp ;
-        
-        if(g.priorite > d.priorite){
-            if(noeud == root)
+        NoeudArbre<E> temp;
+
+        if (g.priorite > d.priorite) {
+            if (noeud == root) {
                 root = g;
-                
+            }
+
             g.pere = p;
             temp = g.filsDroit;
             g.filsDroit = noeud;
-            
-            if(noeud == p.filsDroit)
+
+            if (noeud == p.filsDroit) {
                 p.filsDroit = g;
-            else
+            } else {
                 p.filsGauche = g;
-            
+            }
+
             noeud.filsGauche = temp;
             noeud.pere = g;
-            
-        }else if(g.priorite < d.priorite){
-            if(noeud == root)
+
+        } else if (g.priorite < d.priorite) {
+            if (noeud == root) {
                 root = d;
+            }
             d.pere = p;
             temp = d.filsGauche;
             d.filsGauche = noeud;
-            
-            if(noeud == p.filsDroit)
+
+            if (noeud == p.filsDroit) {
                 p.filsDroit = d;
-            else
+            } else {
                 p.filsGauche = d;
-            
+            }
+
             noeud.filsDroit = temp;
             noeud.pere = d;
-        }else{
+        } else {
             throw new Exercice1Exception("Arbre erronée, priorité dupliquée");
         }
-        
+
     }
 
     /**

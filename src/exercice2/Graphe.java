@@ -182,10 +182,8 @@ public class Graphe<E extends Comparable<E>> {
      * vertex
      */
     private void getPath(int positionDepart, int positionArrivee, List<E> sommetParcouru) {
-//        System.out.println("vertex[positionArrivee] : "+vertex[positionArrivee]);
-        System.out.println(" sommetParcouru : " + sommetParcouru);
         sommetParcouru.add(vertex[positionDepart]);
-        boolean found =( vertex[positionDepart].compareTo(vertex[positionArrivee]) == 0);
+        boolean found = (vertex[positionDepart].compareTo(vertex[positionArrivee]) == 0);
         int i = 0;
         while (!found && i < vertex.length) {
             /**

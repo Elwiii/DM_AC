@@ -182,14 +182,27 @@ public class Graphe<E extends Comparable<E>> {
      * vertex
      */
     private void getPath(int positionDepart, int positionArrivee, List<E> sommetParcouru) {
+//        System.out.println("vertex[positionArrivee] : "+vertex[positionArrivee]);
+        System.out.println(" sommetParcouru : " + sommetParcouru);
         sommetParcouru.add(vertex[positionDepart]);
-        boolean found = false;
+        boolean found =( vertex[positionDepart].compareTo(vertex[positionArrivee]) == 0);
         int i = 0;
         while (!found && i < vertex.length) {
+            /**
+             * si le ième sommet est lié par une arrête à notre sommet de
+             * depart, alors on regarde si on peut trouver le sommet d'arrivé à
+             * partir du ième sommet
+             *
+             */
             if ((this.edges[positionDepart][i] != null || this.edges[i][positionDepart] != null) && !sommetParcouru.contains(vertex[i])) {
                 getPath(i, positionArrivee, sommetParcouru);
+                found = sommetParcouru.contains(vertex[positionArrivee]);
+                if (!found) {
+                    // si on arrive pas à sommetArrivé, c'est que passer par le ième sommet n'est pas viable
+                    sommetParcouru.remove(vertex[i]);
+                }
             }
-            found = sommetParcouru.contains(vertex[positionArrivee]);
+
             i++;
         }
     }

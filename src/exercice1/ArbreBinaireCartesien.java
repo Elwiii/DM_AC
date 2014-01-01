@@ -388,7 +388,11 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         NoeudArbre<E> g = noeud.filsGauche;
         // noeud temporaire
         NoeudArbre<E> temp ;
+        
         if(g.priorite > d.priorite){
+            if(noeud == root)
+                root = g;
+                
             g.pere = p;
             temp = g.filsDroit;
             g.filsDroit = noeud;
@@ -402,6 +406,8 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
             noeud.pere = g;
             
         }else if(g.priorite < d.priorite){
+            if(noeud == root)
+                root = d;
             d.pere = p;
             temp = d.filsGauche;
             d.filsGauche = noeud;

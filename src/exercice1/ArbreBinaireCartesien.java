@@ -36,7 +36,7 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
      *
      * @param <E>
      */
-    protected class NoeudArbre<E extends Comparable<E>> {
+    public class NoeudArbre<E extends Comparable<E>> {
 
         E clef;
         double priorite;
@@ -139,9 +139,6 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         NoeudArbre result = NIL;
         NoeudArbre resultGauche;
         NoeudArbre resultDroit;
-//        System.out.println("noeudCourant : " + noeudCourant);
-//        System.out.println("noeudCourant.filsDroit : " + noeudCourant.filsDroit);
-//        System.out.println("noeudCourant.filsGauche : " + noeudCourant.filsGauche);
         if (noeudCourant != NIL) {
             if (priorite == noeudCourant.priorite) {
                 result = noeudCourant;
@@ -217,8 +214,6 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
      */
     private NoeudArbre rechercheClefArbre(E clef, NoeudArbre<E> noeudCourant) {
         NoeudArbre<E> result = NIL;
-
-//        System.out.println("noeudCourant : "+noeudCourant);
         if (noeudCourant.clef.compareTo(clef) == 0) {
             result = noeudCourant;
         } else if (noeudCourant.clef.compareTo(clef) < 0) {
@@ -244,7 +239,6 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
      */
     private NoeudArbre rechercheClefList(E clef) {
         NoeudArbre<E> result = NIL;
-
         int i = 0;
         while (result == NIL && i < listNoeudArbres.size()) {
             if (listNoeudArbres.get(i).clef.compareTo(clef) == 0) {
@@ -252,7 +246,6 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
             }
             i++;
         }
-
         return result;
     }
 
@@ -365,66 +358,15 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         p.pere = noeud;
     }
 
-    public void remove(E clef) throws Exercice1Exception {
+    public void enlever(E clef) throws Exercice1Exception {
         NoeudArbre<E> noeud = rechercheClef(clef, SEARCH_TREE);
-//        NoeudArbre noeudArbre = noeud;
-//        while (noeud.filsDroit != NIL && noeud.filsGauche != NIL) {
-            descendreNoeudUnCran(noeud);
+//        System.out.println("noeud0 : " + noeud);
+        while (!(noeud.filsDroit == NIL && noeud.filsGauche == NIL)) {
+            descNoeudUnCran(noeud);
             noeud = rechercheClef(clef, SEARCH_TREE);
-            descendreNoeudUnCran(noeud);
-//            descendreNoeudUnCran(noeud);
-//            noeud = rechercheClef(clef, SEARCH_TREE);
-//            descendreNoeudUnCran(noeud);
-//        }
-        System.out.println("noeud : " + noeud);
-    }
-
-    private void descendreNoeudUnCran(NoeudArbre<E> noeud) {
-        // fils droit du noeud
-        NoeudArbre<E> d = noeud.filsDroit;
-        // fils gauche du noeud
-        NoeudArbre<E> g = noeud.filsGauche;
-        NoeudArbre newNoeud, newNoeudFilsDroit = null, newNoeudFilsGauche = null, newNoeudPetitFilsDroit_D, newNoeudPetitFilsGauche_D, newNoeudPetitFilsDroit_G, newNoeudPetitFilsGauche_G;
-//        System.out.println("n " + noeud);
-//        System.out.println("fd " + d);
-//        System.out.println("fg " + g);
-//        System.out.println("pG : " + g.priorite + ", pD : " + d.priorite);
-        if (noeud.filsGauche != NIL || noeud.filsDroit != NIL) {
-            if (g.priorite > d.priorite) {
-                newNoeud = g;
-                newNoeudFilsDroit = noeud;
-                newNoeudFilsGauche = g.filsGauche;
-                newNoeudPetitFilsDroit_D = d;
-                newNoeudPetitFilsGauche_D = g.filsDroit;
-                newNoeudFilsDroit.filsDroit = newNoeudPetitFilsDroit_D;
-                newNoeudFilsDroit.filsGauche = newNoeudPetitFilsGauche_D;
-                newNoeud.filsDroit = newNoeudFilsDroit;
-                newNoeud.filsGauche = newNoeudFilsGauche;
-                noeud = newNoeud;
-//                System.out.println("nNo : " + noeud);
-//                System.out.println("nfD : " + newNoeudFilsDroit);
-//                System.out.println("nfG : " + newNoeudFilsGauche); //Fonctionne niquel
-            }
-            if (g.priorite < d.priorite) {
-                newNoeud = d;
-                newNoeudFilsDroit = d.filsDroit;
-                newNoeudFilsGauche = noeud;
-                newNoeudPetitFilsDroit_G = d.filsGauche;
-                newNoeudPetitFilsGauche_G = g;
-                newNoeudFilsGauche.filsDroit = newNoeudPetitFilsDroit_G;
-                newNoeudFilsGauche.filsGauche = newNoeudPetitFilsGauche_G;
-                newNoeud.filsDroit = newNoeudFilsDroit;
-                newNoeud.filsGauche = newNoeudFilsGauche;
-                noeud = newNoeud;
-//                System.out.println("nNo : " + noeud);
-//                System.out.println("nfD : " + newNoeudFilsDroit);
-//                System.out.println("nfG : " + newNoeudFilsGauche); //Fonctionne niquel
-            }
+            System.out.println("Final " + this);
+            System.out.println("Noeud Final " + noeud);
         }
-        System.out.println("Nouveau Noeud : " + noeud);//la descente se fait correctement
-        System.out.println("Nouveau nfD : " + newNoeudFilsDroit);
-        System.out.println("Nouveau nfG : " + newNoeudFilsGauche); //Fonctionne niq
-
         if (noeud.filsDroit == NIL && noeud.filsGauche == NIL) {
             if (noeud.clef.compareTo(noeud.pere.clef) < 0) {
                 noeud.pere.filsGauche = NIL;
@@ -432,8 +374,77 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
             if (noeud.clef.compareTo(noeud.pere.clef) > 0) {
                 noeud.pere.filsDroit = NIL;
             }
-        } //Fonctionne niquel
-//        return noeud;
+        }
+    }
+
+    /**
+     * descend le noeud d'un cran dans l'arbre en respectant la règle des arbre
+     * binaire. Suppose que le noeud.pere != NIL
+     *
+     * @param noeud
+     */
+    private void descNoeudUnCran(NoeudArbre<E> noeud) {
+        // père du noeud
+        NoeudArbre<E> p = noeud.pere;
+        // fils droit du noeud
+        NoeudArbre<E> d = noeud.filsDroit;
+        // fils gauche du noeud
+        NoeudArbre<E> g = noeud.filsGauche;
+        // grand père du noeud
+        NoeudArbre<E> gp = noeud.pere.pere;
+
+        if (d.priorite > g.priorite) {
+            if (p != NIL) {
+                if (p == gp.filsDroit) {
+                    noeud.pere.pere.filsDroit = noeud.pere;
+                }
+                if (p == gp.filsGauche) {
+                    noeud.pere.pere.filsGauche = noeud.pere;
+                }
+            }
+            noeud.pere = d;
+            noeud.pere.pere = p;
+            noeud.filsDroit = d.filsGauche;
+            d.filsGauche = noeud;
+            d.pere = p;
+            if (p == NIL) {
+                root = noeud;
+            }
+
+//            if (gp.filsDroit == p) {
+//                noeud.pere.pere.filsDroit = noeud.pere;
+//            }
+//            if (gp.filsGauche == p) {
+//                noeud.pere.pere.filsGauche = noeud.pere;
+//            }
+        }
+        if (d.priorite < g.priorite) {
+            if (p != NIL && p == gp.filsDroit) {
+                if (p == gp.filsDroit) {
+                    noeud.pere.pere.filsDroit = noeud.pere;
+                }
+                if (p == gp.filsGauche) {
+                    noeud.pere.pere.filsGauche = noeud.pere;
+                }
+            }
+            noeud.pere = g;
+            noeud.pere.pere = p;
+            noeud.filsGauche = g.filsDroit;
+            g.filsDroit = noeud;
+            g.pere = p;
+            if (p == NIL) {
+                root = noeud;
+            }
+
+            System.out.println("Noeud : " + noeud);//la descente se fait correctement
+            System.out.println("P : " + noeud.pere);
+            System.out.println("D : " + noeud.filsDroit);
+            System.out.println("G : " + noeud.filsGauche);
+            System.out.println("GP : " + noeud.pere.pere);
+            System.out.println("GP_D : " + noeud.pere.pere.filsDroit);
+            System.out.println("GP_G : " + noeud.pere.pere.filsGauche);
+            //Fonctionne niquel
+        }
     }
 
     /**
@@ -444,15 +455,12 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
     private int computeHauteurIntermediaire(NoeudArbre<E> root) {
         int hauteurGauche = 0;
         int hauteurDroite = 0;
-
         if (root.filsDroit != NIL) {
             hauteurDroite = 1 + computeHauteurIntermediaire(root.filsDroit);
         }
-
         if (root.filsGauche != NIL) {
             hauteurGauche = 1 + computeHauteurIntermediaire(root.filsGauche);
         }
-
         return Math.max(hauteurGauche, hauteurDroite);
     }
 

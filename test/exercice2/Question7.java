@@ -6,14 +6,13 @@
 package exercice2;
 
 import exercice1.Exercice1Exception;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author CARRARA Nicolas
+ * @author CARRARA Nicolas et CHAYEM Samy
  */
 public class Question7 {
 

@@ -23,7 +23,10 @@ public class VerificationGenerale {
             // ABC
             ArbreBinaireCartesien<Integer> abc = new ArbreBinaireCartesien<>();
             abc.insererClef(11, 15);
+            abc.supprimer(11);
+            System.out.println(abc.computeHauteur() + " / " + abc);
             abc.insererClef(6, 2);
+            System.out.println(abc.computeHauteur() + " / " + abc);
             abc.insererClef(4, 3);
             abc.insererClef(1, 0);
             abc.insererClef(5, 8);

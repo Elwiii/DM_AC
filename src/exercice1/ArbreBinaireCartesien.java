@@ -371,7 +371,10 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
             noeud.pere.filsDroit = NIL;
         } else if (noeud.pere.filsGauche == noeud) {
             noeud.pere.filsGauche = NIL;
-        } else {
+        } else if (noeud.pere == NIL){
+            root = NIL;
+        }
+        else{
             throw new Exercice1Exception("Etat de l'arbre corrompu, le noeud " + noeud + " n'est ni le fils droit ni le fils gauche de son père");
         }
 

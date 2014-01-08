@@ -5,6 +5,7 @@
  */
 package exercice2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,13 +21,15 @@ public class TestParseEtLevenstein {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        List<String> listeMot = MorphingTools.parseTexteVersMot("test/exercice2/fichierTestParse");
-        System.out.println("Liste :\n" + listeMot);
-        for (int i = 0; i < listeMot.size(); i++) {
-            for (int j = 0; j < listeMot.size(); j++) {
-                System.out.println("<" + listeMot.get(i) + "," + listeMot.get(j) + "> : " + MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j)));
-            }
-        }
+//        List<String> listeMot = MorphingTools.parseTexteVersMot("test/exercice2/fichierTestParse");
+//        System.out.println("Liste :\n" + listeMot);
+//        for (int i = 0; i < listeMot.size(); i++) {
+//            for (int j = 0; j < listeMot.size(); j++) {
+//                System.out.println("<" + listeMot.get(i) + "," + listeMot.get(j) + "> : " + MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j)));
+//            }
+//        }
+        List<String> etapes = new ArrayList<>();
+        System.out.println("dl = "+MorphingTools.distanceLevenshtein2("BONHEUR","BERNER",etapes));
     }
 
 }

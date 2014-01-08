@@ -8,6 +8,7 @@ package exercice2;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -105,4 +106,196 @@ public class MorphingTools {
         return Math.min(Math.min(a, b), c);
     }
 
+    public static int distanceLevenshtein2(String target, String source, List<String> etapeIntermediaire) {
+        char[] chaineCharSource = target.toCharArray();
+        char[] chaineCharTarget = source.toCharArray();
+        int cost; // cost représente si oui ou non 2 caracteres sont "egaux"
+
+        // Matrice de taille (chaineCharSource.length + 1) * (chaineCharTarget.length + 1) q3 du TD
+        int[][] levenshtein = new int[chaineCharSource.length + 1][chaineCharTarget.length + 1];
+
+        int[][] tableauChemin = new int[chaineCharSource.length + 1][chaineCharTarget.length + 1];
+
+        int[] minimum;
+
+        for (int i = 0; i < chaineCharSource.length + 1; i++) {
+            levenshtein[i][0] = i;
+        }
+        for (int j = 0; j < chaineCharTarget.length + 1; j++) {
+            levenshtein[0][j] = j;
+        }
+
+        // on commence ici à 1 afin d'éviter une exception d'index : 0-1 = -1 --> erreur.
+        // C'est pour cela qu'on pose i-1 et j-1 dans la condition
+        for (int i = 1; i < chaineCharSource.length + 1; i++) {
+            for (int j = 1; j < chaineCharTarget.length + 1; j++) {
+                if (chaineCharSource[i - 1] == chaineCharTarget[j - 1]) {
+                    cost = 0; // pas de coût puisque les 2 caracteres sont egaux
+                } else {
+                    cost = 1; // coût puisque les 2 caracteres sont différents
+                }
+
+                minimum = minimum2((levenshtein[i - 1][j] + 1), (levenshtein[i][j - 1] + 1), (levenshtein[i - 1][j - 1] + cost));
+                // Correspond a la formule de récurrence de la distance de levenshtein q2 du TD
+                levenshtein[i][j] = minimum[MINIMUM];
+                tableauChemin[i][j] = minimum[POSITION_MINIMUM];
+            }
+        }
+        System.out.println(toString(tableauChemin));
+
+        // calcul des étapes intermédiaire
+        etapeIntermediaire = getEtapeIntermediare(chaineCharSource, chaineCharTarget, tableauChemin);
+
+        return levenshtein[chaineCharSource.length][chaineCharTarget.length];
+    }
+
+    private static List<String> getEtapeIntermediare(char[] source, char[] target, int[][] positionMinimum) {
+
+        class Operation {
+
+            int operateur;
+            Character operandeG;
+            Character operandeD;
+
+            Operation(int operateur, Character operandeG, Character operandeD) {
+                this.operateur = operateur;
+                this.operandeG = operandeG;
+                this.operandeD = operandeD;
+            }
+
+            @Override
+            public String toString() {
+                String res = "";
+                switch (operateur) {
+                    case INSERT:
+                        res = "I"/*+ " "+ operandeG*/;
+                        break;
+                    case DELETE:
+                        res = "D"/*+ " "+operandeD*/;
+                        break;
+                    case SUBSTITUTION:
+                        res = "S" /*+ " "+ operandeG+" "+ operandeD*/;
+                        break;
+                    default:
+                        // exeception;
+                        break;
+                }
+                return res + "(" + operandeG + ", " + operandeD + ")";
+            }
+        }
+
+        List<Operation> operations = new ArrayList<>();
+
+        boolean stop = false;
+        int i = source.length;
+        int j = target.length;
+        Character operandeG = null;
+        Character operandeD = null;
+
+        while (!stop) {
+            //   System.out.println(i + " , " + j);
+            operandeG = null;
+            operandeD = null;
+            if (i - 1 >= 0) {
+                operandeG = source[i - 1];
+            }
+            if (j - 1 >= 0) {
+                operandeD = target[j - 1];
+            }
+            operations.add(0, new Operation(positionMinimum[i][j], operandeG, operandeD));
+
+            switch (positionMinimum[i][j]) {
+                case INSERT:
+                    // on monte dans le tableau
+                    i--;
+                    break;
+                case DELETE:
+                    // on va à gauche
+                    j--;
+                    break;
+                case SUBSTITUTION:
+                    // on monte en haut à gauche
+                    j--;
+                    i--;
+                    break;
+                default:
+                    // exeception;
+                    break;
+            }
+            stop = (i == 0) && (j == 0);
+        }
+
+        System.out.println("operation : " + operations);
+
+        List<String> etapes = new ArrayList<>();
+        int decalage = 0;
+        Operation op = null;
+        for (int k = 0; k < operations.size(); k++) {
+            op = operations.get(k);
+            switch (op.operateur) {
+                case INSERT:
+                    decalage++;
+                    
+                    break;
+                case DELETE:
+                    decalage--;
+                    break;
+                case SUBSTITUTION:
+                    if (!op.operandeD.equals(op.operandeG)) {
+                        source[k + decalage] = op.operandeG;
+                        etapes.add(new String(source));
+                    }
+                    else{
+                        decalage--;
+                    }
+                    break;
+                default:
+                //exception
+            }
+        }
+        System.out.println(etapes);
+        return etapes;
+    }
+
+    public static String toString(int[][] tab) {
+        String s = "";
+        for (int i = 0; i < tab.length; i++) {
+            for (int j = 0; j < tab[i].length; j++) {
+                s = s + " " + tab[i][j];
+            }
+            s = s + "\n";
+        }
+        return s;
+    }
+    private static final int MINIMUM = 0;
+    private static final int POSITION_MINIMUM = 1;
+    private static final int INSERT = 0;
+    private static final int DELETE = 1;
+    private static final int SUBSTITUTION = 2;
+
+    /**
+     *
+     * @param a
+     * @param b
+     * @param c
+     * @return minimum des 3 valeurs
+     */
+    private static int[] minimum2(int a, int b, int c) {
+        int[] res = {a, INSERT};
+        if (b < a) {
+            res[MINIMUM] = b;
+            res[POSITION_MINIMUM] = DELETE;
+            if (c < b) {
+                res[MINIMUM] = c;
+                res[POSITION_MINIMUM] = SUBSTITUTION;
+            }
+        } else {
+            if (c < a) {
+                res[MINIMUM] = c;
+                res[POSITION_MINIMUM] = SUBSTITUTION;
+            }
+        }
+        return res;
+
+    }
 }

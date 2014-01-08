@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -40,8 +40,7 @@ public class Question7 {
         for (int i = 0; i < listeMot.size(); i++) {
             vertex[i] = listeMot.get(i);
             for (int j = i; j < listeMot.size(); j++) {
-//                edges[i][j] = MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j));
-                edges[i][j] = MorphingTools.distanceLevenshtein2(listeMot.get(j), listeMot.get(i), etapes);
+                edges[i][j] = MorphingTools.distanceLevenshtein(listeMot.get(j), listeMot.get(i));
 
             }
         }

@@ -115,7 +115,22 @@ public class MorphingTools {
         return Math.min(Math.min(a, b), c);
     }
 
-    public static int distanceLevenshtein2(String source, String target, List<String> etapeIntermediaire) {
+    
+    /**
+     * 
+     * @param source
+     * @param target
+     * @param etapeIntermediaire
+     * @return 
+     */
+    public static int distanceLevenshtein(String source, String target, List<String> etapeIntermediaire) {
+        
+        //workaround pour débugger, on verra si on peux faire plus jolie après
+        String temp = source;
+        source = target;
+        target = temp;
+        // fin du workaround
+        
         char[] chaineCharSource = source.toCharArray();
         char[] chaineCharTarget = target.toCharArray();
         int cost; // cost représente si oui ou non 2 caracteres sont "egaux"
@@ -150,49 +165,68 @@ public class MorphingTools {
                 tableauChemin[i][j] = minimum[POSITION_MINIMUM];
             }
         }
-        System.out.println(toString(tableauChemin));
-        System.out.println(toString(levenshtein));
+//        System.out.println(toString(tableauChemin));
+//        System.out.println(toString(levenshtein));
+
         // calcul des étapes intermédiaire
-        etapeIntermediaire = getEtapeIntermediare(chaineCharSource, chaineCharTarget, tableauChemin);
+        etapeIntermediaire.addAll(getEtapeIntermediare(chaineCharSource, chaineCharTarget, tableauChemin));
 
         return levenshtein[chaineCharSource.length][chaineCharTarget.length];
     }
 
     private static List<String> getEtapeIntermediare(char[] source, char[] target, int[][] positionMinimum) {
 
-        class Operation {
+        List<Operation> operations = getOperations(source, target, positionMinimum);
 
-            int operateur;
-            Character operandeG;
-            Character operandeD;
+        List<String> etapes = new ArrayList<>();
 
-            Operation(int operateur, Character operandeG, Character operandeD) {
-                this.operateur = operateur;
-                this.operandeG = operandeG;
-                this.operandeD = operandeD;
-            }
+        char[] temp = new char[Math.max(source.length, target.length)];
 
-            @Override
-            public String toString() {
-                String res = "";
-                switch (operateur) {
-                    case INSERT:
-                        res = "I_op_Dte";
-                        break;
-                    case DELETE:
-                        res = "D_op_Gche";
-                        break;
-                    case SUBSTITUTION:
-                        res = "S_op_Dte_en_Gche";
-                        break;
-                    default:
-                        // exception;
-                        break;
-                }
-                return res + "(" + operandeG + ", " + operandeD + ")";
+        System.arraycopy(target, 0, temp, 0, target.length);
+//        for(int l=0;l<source.length;l++)
+//            temp[l] = source[l];
+        int decalage = 0;
+//System.out.println("new String(temp) : "+new String(temp));
+        Operation op = null;
+
+        for (int k = 0; k < operations.size(); k++) {
+            op = operations.get(k);
+//            String s = null;
+            switch (op.operateur) {
+                case INSERT:
+                    for(int i=temp.length-1;i>decalage;i--)
+                        temp[i] = temp[i-1];
+                    temp[decalage] = op.operandeG;
+                    etapes.add((new String(temp)).toLowerCase());
+                    decalage++;
+                    break;
+                case DELETE:
+                    for(int i=decalage;i<temp.length-1;i++)
+                        temp[i] = temp[i+1];
+                    temp[temp.length-1]= '\u0000';
+                    etapes.add((new String(temp)).toLowerCase());
+                    break;
+                case SUBSTITUTION:
+                    if (!op.operandeD.equals(op.operandeG)) {
+                        temp[decalage] = op.operandeG;
+                        etapes.add((new String(temp)).toLowerCase());
+//                        System.out.println("new String(temp) : "+new String(temp));
+                    } else {
+                        
+                    }
+                    decalage++;
+                    break;
+                default:
+                //exception
             }
         }
+//        etapes.add(etapes.size(), targetString);
+        System.out.println(etapes);
+        etapes.remove(etapes.size()-1);
+        return etapes;
+    }
 
+    private static List<Operation> getOperations(char[] source, char[] target, int[][] positionMinimum) {
         List<Operation> operations = new ArrayList<>();
 
         boolean stop = false;
@@ -202,7 +236,7 @@ public class MorphingTools {
         Character operandeD = null;
 
         while (!stop) {
-            //   System.out.println(i + " , " + j);
+            System.out.println(i + " , " + j);
             operandeG = null;
             operandeD = null;
             if (i - 1 >= 0) {
@@ -231,41 +265,45 @@ public class MorphingTools {
                     // exeception;
                     break;
             }
-            stop = (i == 0) && (j == 0);
+            stop = ((i < 0) || (j < 0))||(i==0 && j==0);
         }
 
         System.out.println("operation : " + operations);
 
-        List<String> etapes = new ArrayList<>();
-//        String sourceString = new String(source);
-//        String targetString = new String(target);
-//        etapes.add(sourceString.toUpperCase());
-        int decalage = 0;
-        Operation op = null;
-        for (int k = 0; k < operations.size(); k++) {
-            op = operations.get(k);
-//            String s = null;
-            switch (op.operateur) {
+        return operations;
+    }
+
+    static class Operation {
+
+        int operateur;
+        Character operandeG;
+        Character operandeD;
+
+        Operation(int operateur, Character operandeG, Character operandeD) {
+            this.operateur = operateur;
+            this.operandeG = operandeG;
+            this.operandeD = operandeD;
+        }
+
+        @Override
+        public String toString() {
+            String res = "";
+            switch (operateur) {
                 case INSERT:
+                    res = "Ins";
                     break;
                 case DELETE:
-                    decalage--;
+                    res = "Del";
                     break;
                 case SUBSTITUTION:
-                    if (!op.operandeD.equals(op.operandeG)) {
-                        source[k + decalage] = op.operandeD;
-                        etapes.add(new String(source).toLowerCase());
-                    } else {
-                        //decalage--;
-                    }
+                    res = "Sub";
                     break;
                 default:
-                //exception
+                    // exception;
+                    break;
             }
+            return res + "(" + operandeG + ", " + operandeD + ")";
         }
-//        etapes.add(etapes.size(), targetString);
-        System.out.println(etapes);
-        return etapes;
     }
 
     public static String toString(int[][] tab) {

@@ -68,6 +68,9 @@ public class MorphingTools {
         char[] chaineCharSource = source.toCharArray();
         char[] chaineCharTarget = target.toCharArray();
         int cost; // cost représente si oui ou non 2 caracteres sont "egaux"
+        int[][] tableauChemin = new int[chaineCharSource.length + 1][chaineCharTarget.length + 1];
+
+        int[] minimum;
 
         // Matrice de taille (chaineCharSource.length + 1) * (chaineCharTarget.length + 1) q3 du TD
         int[][] levenshtein = new int[chaineCharSource.length + 1][chaineCharTarget.length + 1];
@@ -90,8 +93,14 @@ public class MorphingTools {
                 }
                 // Correspond a la formule de récurrence de la distance de levenshtein q2 du TD
                 levenshtein[i][j] = minimum((levenshtein[i - 1][j] + 1), (levenshtein[i][j - 1] + 1), (levenshtein[i - 1][j - 1] + cost));
+                minimum = minimum2((levenshtein[i - 1][j] + 1), (levenshtein[i][j - 1] + 1), (levenshtein[i - 1][j - 1] + cost));
+                // Correspond a la formule de récurrence de la distance de levenshtein q2 du TD
+                levenshtein[i][j] = minimum[MINIMUM];
+                tableauChemin[i][j] = minimum[POSITION_MINIMUM];
             }
         }
+        System.out.println(toString(tableauChemin));
+        System.out.println(toString(levenshtein));
         return levenshtein[chaineCharSource.length][chaineCharTarget.length];
     }
 
@@ -106,9 +115,9 @@ public class MorphingTools {
         return Math.min(Math.min(a, b), c);
     }
 
-    public static int distanceLevenshtein2(String target, String source, List<String> etapeIntermediaire) {
-        char[] chaineCharSource = target.toCharArray();
-        char[] chaineCharTarget = source.toCharArray();
+    public static int distanceLevenshtein2(String source, String target, List<String> etapeIntermediaire) {
+        char[] chaineCharSource = source.toCharArray();
+        char[] chaineCharTarget = target.toCharArray();
         int cost; // cost représente si oui ou non 2 caracteres sont "egaux"
 
         // Matrice de taille (chaineCharSource.length + 1) * (chaineCharTarget.length + 1) q3 du TD
@@ -142,7 +151,7 @@ public class MorphingTools {
             }
         }
         System.out.println(toString(tableauChemin));
-
+        System.out.println(toString(levenshtein));
         // calcul des étapes intermédiaire
         etapeIntermediaire = getEtapeIntermediare(chaineCharSource, chaineCharTarget, tableauChemin);
 
@@ -168,16 +177,16 @@ public class MorphingTools {
                 String res = "";
                 switch (operateur) {
                     case INSERT:
-                        res = "I"/*+ " "+ operandeG*/;
+                        res = "I_op_Dte";
                         break;
                     case DELETE:
-                        res = "D"/*+ " "+operandeD*/;
+                        res = "D_op_Gche";
                         break;
                     case SUBSTITUTION:
-                        res = "S" /*+ " "+ operandeG+" "+ operandeD*/;
+                        res = "S_op_Dte_en_Gche";
                         break;
                     default:
-                        // exeception;
+                        // exception;
                         break;
                 }
                 return res + "(" + operandeG + ", " + operandeD + ")";
@@ -228,31 +237,33 @@ public class MorphingTools {
         System.out.println("operation : " + operations);
 
         List<String> etapes = new ArrayList<>();
+//        String sourceString = new String(source);
+//        String targetString = new String(target);
+//        etapes.add(sourceString.toUpperCase());
         int decalage = 0;
         Operation op = null;
         for (int k = 0; k < operations.size(); k++) {
             op = operations.get(k);
+//            String s = null;
             switch (op.operateur) {
                 case INSERT:
-                    decalage++;
-                    
                     break;
                 case DELETE:
                     decalage--;
                     break;
                 case SUBSTITUTION:
                     if (!op.operandeD.equals(op.operandeG)) {
-                        source[k + decalage] = op.operandeG;
-                        etapes.add(new String(source));
-                    }
-                    else{
-                        decalage--;
+                        source[k + decalage] = op.operandeD;
+                        etapes.add(new String(source).toLowerCase());
+                    } else {
+                        //decalage--;
                     }
                     break;
                 default:
                 //exception
             }
         }
+//        etapes.add(etapes.size(), targetString);
         System.out.println(etapes);
         return etapes;
     }

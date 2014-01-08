@@ -29,7 +29,10 @@ public class TestParseEtLevenstein {
 //            }
 //        }
         List<String> etapes = new ArrayList<>();
-        System.out.println("dl = "+MorphingTools.distanceLevenshtein2("BONHEUR","BERNER",etapes));
+        System.out.println("dl = "+MorphingTools.distanceLevenshtein2("THERMES","BERNER",etapes));
+      //  System.out.println("dl = "+MorphingTools.distanceLevenshtein("NICHE","CHIENS"));
+//        System.out.println("dl = "+MorphingTools.distanceLevenshtein("TRIER","TRI"));
+
     }
 
 }

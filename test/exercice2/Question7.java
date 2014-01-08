@@ -6,6 +6,7 @@
 package exercice2;
 
 import exercice1.Exercice1Exception;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,11 +36,13 @@ public class Question7 {
         List<String> listeMot = MorphingTools.parseTexteVersMot(path);
         Integer[][] edges = new Integer[listeMot.size()][listeMot.size()];
         String[] vertex = new String[listeMot.size()];
-
+        List<String> etapes = new ArrayList<>();
         for (int i = 0; i < listeMot.size(); i++) {
             vertex[i] = listeMot.get(i);
             for (int j = i; j < listeMot.size(); j++) {
-                edges[i][j] = MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j));
+//                edges[i][j] = MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j));
+                edges[i][j] = MorphingTools.distanceLevenshtein2(listeMot.get(j), listeMot.get(i), etapes);
+
             }
         }
         try {

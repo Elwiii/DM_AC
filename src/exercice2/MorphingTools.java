@@ -93,7 +93,7 @@ public class MorphingTools {
                 }
                 // Correspond a la formule de récurrence de la distance de levenshtein q2 du TD
                 levenshtein[i][j] = minimum((levenshtein[i - 1][j] + 1), (levenshtein[i][j - 1] + 1), (levenshtein[i - 1][j - 1] + cost));
-                minimum = minimum2((levenshtein[i - 1][j] + 1), (levenshtein[i][j - 1] + 1), (levenshtein[i - 1][j - 1] + cost));
+                minimum = min((levenshtein[i - 1][j] + 1), (levenshtein[i][j - 1] + 1), (levenshtein[i - 1][j - 1] + cost));
                 // Correspond a la formule de récurrence de la distance de levenshtein q2 du TD
                 levenshtein[i][j] = minimum[MINIMUM];
                 tableauChemin[i][j] = minimum[POSITION_MINIMUM];
@@ -160,7 +160,7 @@ public class MorphingTools {
                     cost = 1; // coût puisque les 2 caracteres sont différents
                 }
 
-                minimum = minimum2((levenshtein[i - 1][j] + 1), (levenshtein[i][j - 1] + 1), (levenshtein[i - 1][j - 1] + cost));
+                minimum = min((levenshtein[i - 1][j] + 1), (levenshtein[i][j - 1] + 1), (levenshtein[i - 1][j - 1] + cost));
                 levenshtein[i][j] = minimum[MINIMUM];
                 tableauChemin[i][j] = minimum[POSITION_MINIMUM];
             }
@@ -255,7 +255,6 @@ public class MorphingTools {
         Character operandeD;
 
         while (!stop) {
-            System.out.println(i + " , " + j);
             operandeG = null;
             operandeD = null;
             if (i - 1 >= 0) {
@@ -355,7 +354,7 @@ public class MorphingTools {
      * @param c
      * @return minimum des 3 valeurs ainsi que la position du minimum (a, b ou c)
      */
-    private static int[] minimum2(int a, int b, int c) {
+    private static int[] min(int a, int b, int c) {
         int[] res = {a, INSERT};
         if (b < a) {
             res[MINIMUM] = b;

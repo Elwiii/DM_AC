@@ -6,7 +6,7 @@ Q5) Cf MorphingTools.java & TestParseEtLevenstein.java
             - La premiere remplit un tableau à 1 dimension de taille m.
             - La deuxieme remplit un tableau à 1 dimension de taille n.
             - La troisieme est une boucle imbriquée qui remplit un tableau à 2 dimensions de taille (m+1)*(n+1).
-    Le calcul du minimum se faisant en temps constant, nous avons une complexité de l'ordre : O(m*n).
+    Le calcul du minimum se faisant en temps constant, nous avons une complexité de : O(m*n).
 
 Q6) Cf Graphe.java & Question6.java & VerificationGraphe.java
 

@@ -40,8 +40,7 @@ public class Question7 {
         for (int i = 0; i < listeMot.size(); i++) {
             vertex[i] = listeMot.get(i);
             for (int j = i; j < listeMot.size(); j++) {
-                edges[i][j] = MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j),etapes);
-
+                edges[i][j] = MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j), etapes);
             }
         }
         try {
@@ -49,10 +48,25 @@ public class Question7 {
             System.out.println("Graphe :\n" + g);
             System.out.println("Graphe couvrant de poid minimal :\n" + g.kurskal());
             g = g.kurskal();
+            List<String> cheminGeneral = g.getPath(positionDepart, positionArrivee);
             System.out.println("Path : " + g.getPath(positionDepart, positionArrivee));
+            System.out.println("Path detaille : " + chemin(cheminGeneral));
         } catch (Exercice2Exception | Exercice1Exception ex) {
             Logger.getLogger(Question6.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    private static List<String> chemin(List<String> pathList) {
+        List<String> etapes = new ArrayList<>();
+        int i = 0;
+        etapes.add(pathList.get(i).toUpperCase());
+        while (i < pathList.size() - 1) {
+            MorphingTools.distanceLevenshtein(pathList.get(i), pathList.get(i + 1), etapes);
+            etapes.add(pathList.get(i + 1).toUpperCase());
+            i = i + 1;
+        }
+        return etapes;
     }
 
 }

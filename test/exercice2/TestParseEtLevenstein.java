@@ -28,13 +28,29 @@ public class TestParseEtLevenstein {
 //                System.out.println("<" + listeMot.get(i) + "," + listeMot.get(j) + "> : " + MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j)));
 //            }
 //        }
-        List<String> etapes = new ArrayList<>();
-        System.out.println("dl = "+MorphingTools.distanceLevenshtein("A","BBB",etapes));
-        
-        System.out.println("etapes : "+etapes);
-      //  System.out.println("dl = "+MorphingTools.distanceLevenshtein("NICHE","CHIENS"));
+        List<String> etape = new ArrayList<>();
+        List<String> path = new ArrayList<>();
+        path.add("RONGEUR");
+        path.add("BONHEUR");
+        path.add("BERNER");
+        path.add("THERMES");
+//        System.out.println("dl = " + MorphingTools.distanceLevenshtein("BERNER", "BONHEUR", etapes));
+        System.out.println(chemin(path));
+//        System.out.println("etapes : " + etapes);
+        //  System.out.println("dl = "+MorphingTools.distanceLevenshtein("NICHE","CHIENS"));
 //        System.out.println("dl = "+MorphingTools.distanceLevenshtein("TRIER","TRI"));
+    }
 
+    private static List<String> chemin(List<String> pathList) {
+        List<String> etapes = new ArrayList<>();
+        int i = 0;
+        etapes.add(pathList.get(i).toUpperCase());
+        while (i < pathList.size() - 1) {
+            MorphingTools.distanceLevenshtein(pathList.get(i), pathList.get(i + 1), etapes);
+            etapes.add(pathList.get(i + 1).toUpperCase());
+            i = i + 1;
+        }
+        return etapes;
     }
 
 }

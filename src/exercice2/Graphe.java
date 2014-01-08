@@ -14,11 +14,11 @@ import java.util.List;
 
 /**
  * Implémentation de la structure Graphe, utilisation d'une matrice pour les
- * arrêtes
+ * arêtes
  *
  *
  * A noter, pour représenter un graphe non orienté, laisser à null toute la
- * partie sous la diagonale du tableau edges.
+ * partie sous la diagonale du tableau edge.
  *
  * @author CARRARA Nicolas et CHAYEM Samy
  * @param <E>
@@ -32,7 +32,7 @@ public class Graphe<E extends Comparable<E>> {
     private final E[] vertex;
 
     /**
-     * créer un graphe
+     * Constructeur de la classe Graphe. Creation d'un Graphe
      *
      * @param vertex les sommets
      * @param edges la matrices réprésentative des arêtes, e(u,v) = null : pas
@@ -72,7 +72,7 @@ public class Graphe<E extends Comparable<E>> {
         Edge edgeTemp;
         E u;
         E v;
-        // je sais si foreach respecte le i de 0 à size, donc je préfère faire une boucle for
+        // je ne sais si foreach respecte le i de 0 à size, donc je préfère faire une boucle for
         for (int i = 0; i < edgesTriees.size(); i++) {
             edgeTemp = edgesTriees.get(i);
             u = vertex[edgeTemp.positionV1];
@@ -86,16 +86,20 @@ public class Graphe<E extends Comparable<E>> {
     }
 
     /**
-     * renvoi un tableau d'Integer null partout
+     * Methode qui genere un tableau, dont le contenu est vide, de dimension
+     * n*n.
      *
-     * @param n
-     * @return
+     * @param n dimension du tableau
+     * @return tableau null de dimension n*n
      */
     private Integer[][] getNullTab(int n) {
         return new Integer[n][n];
     }
 
     /**
+     * Methode qui genere la liste de toutes les arêtes du graphe, triées par
+     * ordre croissant des poids
+     *
      * @return la liste des arêtes du graphe triées par ordre croissant des
      * poids
      */
@@ -126,8 +130,8 @@ public class Graphe<E extends Comparable<E>> {
     }
 
     /**
-     * class edge, utilise seulement pour extraire les arêtes triées dans
-     * l'ordre croissant
+     * Private Class Edge Permet d'extraire les arêtes triées dans l'ordre
+     * croissant des poids
      *
      * @param <E>
      */
@@ -143,6 +147,12 @@ public class Graphe<E extends Comparable<E>> {
             poid = p;
         }
 
+        /**
+         * Methode qui permet de comparer 2 arêtes via leur poids respectif
+         *
+         * @param t arête t
+         * @return resultat de la comparaison 2 arêtes via leur poids respectif
+         */
         @Override
         public int compareTo(Edge t) {
             // et si l'un des poids est null on fait quoi ? normalement ça n'arrive pas mais quand même ...
@@ -151,7 +161,8 @@ public class Graphe<E extends Comparable<E>> {
     }
 
     /**
-     * Cherche le chemin pour aller d'un sommet de depart à un sommet d'arrivé
+     * Methode qui recherche le chemin pour aller d'un sommet de depart à un
+     * sommet d'arrivé
      *
      * @throws exercice2.Exercice2Exception
      * @condition le graphe doit être connexe et acyclique (i.e. un arbre) et
@@ -170,9 +181,9 @@ public class Graphe<E extends Comparable<E>> {
     }
 
     /**
-     * Cherche le chemin pour aller d'un sommet de depart à un sommet d'arrivé
-     * en suposant qu'on a deja parcouru un certain nombre de sommets.
-     *
+     * Method qui recherche le chemin pour aller d'un sommet de depart à un
+     * sommet d'arrivé en supposant qu'on a deja parcouru un certain nombre de
+     * sommets.
      *
      * @condition le graphe doit être connexe et acyclique (i.e. un arbre) et
      * non orienté (ie c'est null sous la diagonale)

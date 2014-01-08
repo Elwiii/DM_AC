@@ -16,13 +16,13 @@ import java.util.List;
  */
 public class ArbreBinaireCartesien<E extends Comparable<E>> {
 
-    /* constante noeud à l'extrémité */
+    /* Constante Noeud présente aux extremités*/
     protected final NoeudArbre NIL = setNIL();
 
-    /* la racine de l'abc */
+    /* Racine de l'ABC */
     protected NoeudArbre<E> root;
 
-    /* Liste de tous les noeuds de l'arbre,pour la RECHERCHE de type search_list, sinon inutile*/
+    /* Liste de tous les noeuds de l'arbre, pour la RECHERCHE de type SEARCH_LIST, sinon inutile*/
     protected List<NoeudArbre<E>> listNoeudArbres = new ArrayList<>();
 
     /* indique qu'on veut chercher un élément en parcourant la liste des noeuds */
@@ -32,9 +32,12 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
     public static final int SEARCH_TREE = 1;
 
     /**
-     * La classe noeud de l'arbre binaire cartesien. Une clef et une priorité .
-     *
-     * @param <E>
+     * Public Class Noeud associé à l'ABC.
+     * Noeud est caracterisé par : 
+     *      une clef et une priorité .
+     *      un ABC_filsGauche et un ABC_filsDroit
+     *      un Noeud Pere
+     * @param <E> 
      */
     public class NoeudArbre<E extends Comparable<E>> {
 
@@ -62,7 +65,10 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         }
     }
 
-    //workaround pour que NIL ait pour fils lui même
+    /**
+     * workaround pour que NIL ait pour fils lui même
+     * @return 
+     */
     private NoeudArbre setNIL() {
         NoeudArbre nil = new NoeudArbre(null, -1);
         nil.filsDroit = nil;
@@ -70,6 +76,9 @@ public class ArbreBinaireCartesien<E extends Comparable<E>> {
         return nil;
     }
 
+    /**
+     * Constructeur ABC
+     */
     public ArbreBinaireCartesien() {
         root = NIL;
     }

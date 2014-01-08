@@ -1,6 +1,7 @@
 Q1) Cf ArbreBinaireCartesien.java ,Treap.java, VerificationArbre.java, VerificationGenerale.java et enfin VerificationHauteurTreap.java
 
 C'est ce dernier fichier qui nous permet de vérifier (de manière statistique) que la hauteur d'un treap est en log(n).
+On fait 100 tests sur des arbres de taille 0 à 100 et on se rend compte que log(n) et hauteur sont du même ordre grandeur.
 
 Note : Il y a une optimisation à faire pour l'insertion : 
 Effectuer la recherche de l'element pdt l'insertion. 

@@ -115,22 +115,23 @@ public class MorphingTools {
         return Math.min(Math.min(a, b), c);
     }
 
-    
     /**
-     * 
+     * calcule la distance de levensthein entre source et target et remplit la
+     * liste etape avec les étapes de changements.
+     *
      * @param source
      * @param target
      * @param etapeIntermediaire
-     * @return 
+     * @return la distance de levenshtein entre source et target
      */
     public static int distanceLevenshtein(String source, String target, List<String> etapeIntermediaire) {
-        
+
         //workaround pour débugger, on verra si on peux faire plus jolie après
         String temp = source;
         source = target;
         target = temp;
         // fin du workaround
-        
+
         char[] chaineCharSource = source.toCharArray();
         char[] chaineCharTarget = target.toCharArray();
         int cost; // cost représente si oui ou non 2 caracteres sont "egaux"
@@ -160,13 +161,10 @@ public class MorphingTools {
                 }
 
                 minimum = minimum2((levenshtein[i - 1][j] + 1), (levenshtein[i][j - 1] + 1), (levenshtein[i - 1][j - 1] + cost));
-                // Correspond a la formule de récurrence de la distance de levenshtein q2 du TD
                 levenshtein[i][j] = minimum[MINIMUM];
                 tableauChemin[i][j] = minimum[POSITION_MINIMUM];
             }
         }
-//        System.out.println(toString(tableauChemin));
-//        System.out.println(toString(levenshtein));
 
         // calcul des étapes intermédiaire
         etapeIntermediaire.addAll(getEtapeIntermediare(chaineCharSource, chaineCharTarget, tableauChemin));
@@ -174,6 +172,14 @@ public class MorphingTools {
         return levenshtein[chaineCharSource.length][chaineCharTarget.length];
     }
 
+    /**
+     * retourne la liste des mots intermédiaires entre source et target
+     *
+     * @param source
+     * @param target
+     * @param positionMinimum
+     * @return la liste des mots intermédiaires entre source et target
+     */
     private static List<String> getEtapeIntermediare(char[] source, char[] target, int[][] positionMinimum) {
 
         List<Operation> operations = getOperations(source, target, positionMinimum);
@@ -183,58 +189,70 @@ public class MorphingTools {
         char[] temp = new char[Math.max(source.length, target.length)];
 
         System.arraycopy(target, 0, temp, 0, target.length);
-//        for(int l=0;l<source.length;l++)
-//            temp[l] = source[l];
+
         int decalage = 0;
-//System.out.println("new String(temp) : "+new String(temp));
-        Operation op = null;
+
+        Operation op;
 
         for (int k = 0; k < operations.size(); k++) {
+
             op = operations.get(k);
-//            String s = null;
+
             switch (op.operateur) {
                 case INSERT:
-                    for(int i=temp.length-1;i>decalage;i--)
-                        temp[i] = temp[i-1];
+                    for (int i = temp.length - 1; i > decalage; i--) {
+                        temp[i] = temp[i - 1];
+                    }
                     temp[decalage] = op.operandeG;
                     etapes.add((new String(temp)).toLowerCase());
                     decalage++;
                     break;
                 case DELETE:
-                    for(int i=decalage;i<temp.length-1;i++)
-                        temp[i] = temp[i+1];
-                    temp[temp.length-1]= '\u0000';
+                    for (int i = decalage; i < temp.length - 1; i++) {
+                        temp[i] = temp[i + 1];
+                    }
+                    temp[temp.length - 1] = '\u0000';
                     etapes.add((new String(temp)).toLowerCase());
                     break;
                 case SUBSTITUTION:
                     if (!op.operandeD.equals(op.operandeG)) {
                         temp[decalage] = op.operandeG;
                         etapes.add((new String(temp)).toLowerCase());
-//                        System.out.println("new String(temp) : "+new String(temp));
                     } else {
-                        
+
                     }
                     decalage++;
                     break;
                 default:
-                //exception
+                    //exception
+                    break;
             }
         }
-//        etapes.add(etapes.size(), targetString);
-        System.out.println(etapes);
-        if(etapes.size()>0)
-            etapes.remove(etapes.size()-1);
+
+        if (etapes.size() > 0) {
+            etapes.remove(etapes.size() - 1);
+        }
+
         return etapes;
     }
 
+    /**
+     * Retourne l'ensemble des opérations (insert, delete et substitution) qui
+     * permettent de passer du mot source au mot target
+     *
+     * @param source
+     * @param target
+     * @param positionMinimum
+     * @return
+     */
     private static List<Operation> getOperations(char[] source, char[] target, int[][] positionMinimum) {
         List<Operation> operations = new ArrayList<>();
 
         boolean stop = false;
         int i = source.length;
         int j = target.length;
-        Character operandeG = null;
-        Character operandeD = null;
+        Character operandeG;
+        Character operandeD;
 
         while (!stop) {
             System.out.println(i + " , " + j);
@@ -266,14 +284,16 @@ public class MorphingTools {
                     // exeception;
                     break;
             }
-            stop = ((i < 0) || (j < 0))||(i==0 && j==0);
+            stop = ((i < 0) || (j < 0)) || (i == 0 && j == 0);
         }
-
-        System.out.println("operation : " + operations);
 
         return operations;
     }
 
+    /**
+     * Operation utilisé dans l'algo de levenstein. Insertion, suppression et
+     * substitution.
+     */
     static class Operation {
 
         int operateur;
@@ -307,6 +327,11 @@ public class MorphingTools {
         }
     }
 
+    /**
+     * 
+     * @param tab
+     * @return un tableau sous forme de string.
+     */
     public static String toString(int[][] tab) {
         String s = "";
         for (int i = 0; i < tab.length; i++) {
@@ -328,7 +353,7 @@ public class MorphingTools {
      * @param a
      * @param b
      * @param c
-     * @return minimum des 3 valeurs
+     * @return minimum des 3 valeurs ainsi que la position du minimum (a, b ou c)
      */
     private static int[] minimum2(int a, int b, int c) {
         int[] res = {a, INSERT};

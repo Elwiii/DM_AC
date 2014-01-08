@@ -35,7 +35,7 @@ public class VerificationHauteurTreap {
                 int hauteur = t.computeHauteur();
                 sommeLog = sommeLog + log;
                 sommeHauteur = sommeHauteur + hauteur;
-//            System.out.println("O(log("+nombreElement+")) = O("+log+") = ? "+hauteur);
+            System.out.println("O(log("+nombreElement+")) = O("+log+") = ? "+hauteur);
 
             }
 

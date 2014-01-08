@@ -40,7 +40,7 @@ public class Question7 {
         for (int i = 0; i < listeMot.size(); i++) {
             vertex[i] = listeMot.get(i);
             for (int j = i; j < listeMot.size(); j++) {
-                edges[i][j] = MorphingTools.distanceLevenshtein(listeMot.get(j), listeMot.get(i));
+                edges[i][j] = MorphingTools.distanceLevenshtein(listeMot.get(i), listeMot.get(j),etapes);
 
             }
         }

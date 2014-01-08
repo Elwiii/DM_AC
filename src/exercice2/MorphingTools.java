@@ -222,7 +222,8 @@ public class MorphingTools {
         }
 //        etapes.add(etapes.size(), targetString);
         System.out.println(etapes);
-        etapes.remove(etapes.size()-1);
+        if(etapes.size()>0)
+            etapes.remove(etapes.size()-1);
         return etapes;
     }
 
